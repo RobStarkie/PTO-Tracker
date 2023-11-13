@@ -1,26 +1,35 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+interface AppProps {
+  // You can define any props here
+}
+
+const App: React.FC<AppProps> = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Function to handle login
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  // Function to handle logout
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {isLoggedIn ? (
+        <Home handleLogout={handleLogout} />
+      ) : (
+        <Login handleLogin={handleLogin} />
+      )}
     </div>
   );
-}
+};
+
 
 export default App;
