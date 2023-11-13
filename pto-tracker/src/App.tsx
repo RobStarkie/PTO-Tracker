@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+
 import LoginScreen from './Login'
-import Home from './Home'
+import Home from'./HomeScreenFramework/Home';
 
 interface AppProps {
   // You can define any props here

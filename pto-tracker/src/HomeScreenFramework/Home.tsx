@@ -1,0 +1,29 @@
+import React from "react";
+import '.homescreen.css';
+import TopBar from './HomeScreenComponents/TopBar';
+import LeftList from './HomeScreenComponents/LeftList';
+import MiddleCalendar from './HomeScreenComponents/MiddleCalendar';
+import RightAddRequest from './HomeScreenComponents/RightAddRequest';
+
+
+interface HomeProps {
+    handleLogout: () => void;
+}
+
+const Home: React.FC<HomeProps> = ({ handleLogout}) => {
+    return (
+        <div id = "homePage">
+            <div id = "fixedTopBar">
+                <TopBar content=""></TopBar>
+                <div className = "horizontal-line"></div>
+            </div>
+            <div className="containers" id="homeScreenContainers">
+                <div className="leftList"><LeftList content=''></LeftList></div>
+                <div className="middleCalendar"><MiddleCalendar content=''></MiddleCalendar></div>
+                <div className="rightAddRequest"><RightAddRequest content=''></RightAddRequest></div>
+            </div>
+        </div>
+    );
+};
+
+export default Home;
