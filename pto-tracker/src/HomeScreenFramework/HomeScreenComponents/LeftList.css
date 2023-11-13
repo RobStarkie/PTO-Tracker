@@ -1,0 +1,26 @@
+.holidayRequestList {
+        background-color: transparent;
+        position: fixed;
+        height: auto;
+        overflow: auto;
+        text-align: left;
+        background-blend-mode: multiply;
+        width: 400px;;
+}
+.holidayRequestList.listHeader {
+    font-style: italic;
+    color: red;
+
+}
+
+.holidayRequestList a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+  }
+
+  .holidayRequestList a:hover:not(:active) {
+    background-color: red;
+    color: white;
+  }

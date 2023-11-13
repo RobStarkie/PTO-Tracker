@@ -10,7 +10,7 @@ interface AppProps {
 }
 
 const App: React.FC<AppProps> = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   // Function to handle login
   const handleLogin = () => {
@@ -24,7 +24,7 @@ const App: React.FC<AppProps> = () => {
 
   
   return (
-    <div className="App" style={{backgroundImage: "url('https://cdn.wallpapersafari.com/16/15/t5To9s.jpg')"}}>
+    <div className="App">
       {isLoggedIn ? (
         <Home handleLogout={handleLogout} />
       ) : (
