@@ -95,8 +95,16 @@ header .current-date{
   transform: translate(-50%, -50%);
 }
 .days li.active::before{
-  background: #9B59B6;
+  background: #db1c3c;
 }
 .days li:not(.active):hover::before{
   background: #f2f2f2;
+}
+
+.days li.pending{
+    background: #754c53;
+}
+
+.days li.approved{
+    background: rgb(46, 161, 36);
 }

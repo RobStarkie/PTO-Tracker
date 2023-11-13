@@ -2,26 +2,30 @@ import React, { useEffect, useState } from 'react';
 import './MiddleCalendar.css'
 
 const Calendar: React.FC = () => {
+
+    
+
+
+
     const [currYear, setCurrYear] = useState(new Date().getFullYear());
     const [currMonth, setCurrMonth] = useState(new Date().getMonth());
     const [daysTag, setDaysTag] = useState<JSX.Element | null>(null);
     const [currentDate, setCurrentDate] = useState<string>('');
-    const [prevNextIcon, setPrevNextIcon] = useState<NodeListOf<HTMLSpanElement> | null>(null);
+
+
 
     const handleIconClick = (iconId: string) => {
-    setCurrMonth((prevMonth) =>
-        iconId === 'prev' ? prevMonth - 1 : prevMonth + 1
-    );
-
-    if (currMonth < 0 || currMonth > 11) {
-        const date = new Date(currYear, currMonth, new Date().getDate());
-        setCurrYear(date.getFullYear());
-        setCurrMonth(date.getMonth());
-    } else {
-        setCurrYear(new Date().getFullYear());
-        setCurrMonth(new Date().getMonth());
+        if (iconId=="prev") {
+            const date = new Date(currYear, currMonth-1, new Date().getDate());
+            setCurrYear(date.getFullYear());
+            setCurrMonth(date.getMonth());
+        }
+        else {
+            const date = new Date(currYear, currMonth+1, new Date().getDate());
+            setCurrYear(date.getFullYear());
+            setCurrMonth(date.getMonth());
+        }
     }
-    };
   
     useEffect(() => {
       renderCalendar();
@@ -81,10 +85,10 @@ const Calendar: React.FC = () => {
         <header>
           <p className="current-date">{currentDate}</p>
           <div className="icons">
-            <span id="prev" className="material-symbols-rounded">
+            <span id="prev" className="material-symbols-rounded" onClick={() => handleIconClick("prev")}>
               chevron_left
             </span>
-            <span id="next" className="material-symbols-rounded">
+            <span id="next" className="material-symbols-rounded"onClick={() => handleIconClick("next")}>
               chevron_right
             </span>
           </div>
