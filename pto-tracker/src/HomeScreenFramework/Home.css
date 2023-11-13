@@ -1,4 +1,18 @@
-.containers {
-    padding-top: 200px;
-    padding-left: 100px;
+.containers{
+    position: relative;
+    display: flex;
+    flex-direction: column; /* Stacks items vertically */
+    align-items: center;
+    justify-content: center;
+}
+
+.containers div {
+    padding: 20px;
+}
+
+@media screen and (min-width: 900px) {
+    #homeScreenContainers {
+        display: flex;
+        flex-direction: row; /* Stacks items vertically */
+    }
 }

@@ -7,18 +7,18 @@ interface LeftListProps {
 
 const holidayRequests  = [{
     id: 'user1',
-    startDate: '15/08/2024',
-    endDate: '22/08/2024',
+    startDate: '2023-11-01',
+    endDate: '2023-11-06',
     status: 'approved'
 }, {
     id: 'user1',
-    startDate: '22/12/2024',
-    endDate: '02/01/2025',
+    startDate: '2023-12-10',
+    endDate: '2023-12-12',
     status: 'denied'
 }, {
         id: 'user2',
-        startDate: '25/12/2024',
-        endDate: '01/01/2025',
+        startDate: '2024-01-09',
+        endDate: '2024-01-13',
         status: 'approved'
 }];
 

@@ -3,16 +3,15 @@ import './MiddleCalendar.css'
 
 const Calendar: React.FC = () => {
 
-    
-
-
-
     const [currYear, setCurrYear] = useState(new Date().getFullYear());
     const [currMonth, setCurrMonth] = useState(new Date().getMonth());
     const [daysTag, setDaysTag] = useState<JSX.Element | null>(null);
     const [currentDate, setCurrentDate] = useState<string>('');
 
-
+    function isDateInRange(dateToCheck: Date, startDate: Date, endDate: Date): boolean {
+        console.log(dateToCheck >= startDate && dateToCheck <= endDate);
+        return dateToCheck >= startDate && dateToCheck <= endDate;
+    }
 
     const handleIconClick = (iconId: string) => {
         if (iconId=="prev") {
@@ -44,6 +43,18 @@ const Calendar: React.FC = () => {
       for (let i = firstDayofMonth; i > 0; i--) {
         liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
       }
+
+      /*const currentDate = new Date();
+      const startDate = new Date('2023-11-01');
+      const endDate = new Date('2023-11-06');
+
+      for (let i = 1; i <= lastDateofMonth; i++) {
+      let isPending =
+        isDateInRange(currentDate, startDate, endDate)
+            ? 'active'
+            : '';
+        liTag += `<li class="${isPending}">${i}</li>`;
+      }*/
   
       for (let i = 1; i <= lastDateofMonth; i++) {
         let isToday =
