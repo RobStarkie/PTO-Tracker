@@ -79,9 +79,7 @@ header .current-date{
 .days li.inactive{
   color: #aaa;
 }
-.days li.active{
-  color: #fff;
-}
+
 .days li::before{
   position: absolute;
   content: "";
@@ -93,17 +91,39 @@ header .current-date{
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
+
+.days li.active{
+    color: #fff;
+  }
+
 .days li.active::before{
   background: #db1c3c;
 }
+
 .days li:not(.active):hover::before{
   background: #f2f2f2;
 }
 
 .days li.pending{
-    background: #754c53;
+    color: #fff;
+  }
+  
+.days li.pending::before{
+  background: #535353;
 }
 
-.days li.approved{
-    background: rgb(46, 161, 36);
+.days li:not(.pending):hover::before{
+  background: #f2f2f2;
+}
+
+.days li.confirmed{
+    color: #fff;
+  }
+  
+.days li.confirmed::before{
+  background: #1cdb45;
+}
+
+.days li:not(.confirmed):hover::before{
+  background: #f2f2f2;
 }

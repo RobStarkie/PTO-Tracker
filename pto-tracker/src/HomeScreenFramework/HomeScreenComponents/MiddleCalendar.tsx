@@ -8,8 +8,27 @@ const Calendar: React.FC = () => {
     const [daysTag, setDaysTag] = useState<JSX.Element | null>(null);
     const [currentDate, setCurrentDate] = useState<string>('');
 
-    function isDateInRange(dateToCheck: Date, startDate: Date, endDate: Date): boolean {
-        return dateToCheck >= startDate && dateToCheck <= endDate;
+    type DateRange = [Date, Date, string];
+
+    const dateRanges: DateRange[] = [
+        [new Date('2023-10-31'), new Date('2023-11-11'), "pending"],
+        [new Date('2024-01-15'), new Date('2024-01-17'), "confirmed"],
+        [new Date('2023-12-01'), new Date('2023-12-04'), "confirmed"]
+]
+
+    function isDateInRange(dateToCheck: Date): string {
+        var output:string = '';
+        const currentDate:Date = new Date();
+        if (dateToCheck.getDate() == currentDate.getDate() && dateToCheck.getMonth() == currentDate.getMonth() && dateToCheck.getFullYear() == currentDate.getFullYear()) {
+            return 'active';
+        }
+        dateRanges.forEach(([startDate, endDate, status]) => {
+            if (dateToCheck >= startDate && dateToCheck <= endDate) {
+                output = status;
+                return;
+            }
+        })
+        return output;
     }
 
     const handleIconClick = (iconId: string) => {
@@ -43,27 +62,11 @@ const Calendar: React.FC = () => {
         liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
       }
 
-      const currentDate = new Date();
-      const startDate = new Date('01-01-2023');
-      const endDate = new Date('10-15-2023');
-
       for (let i = 1; i <= lastDateofMonth; i++) {
-      let isPending =
-        isDateInRange(currentDate, startDate, endDate)
-            ? 'active'
-            : '';
-        liTag += `<li class="${isPending}">${i}</li>`;
+        const dateToCheck = new Date(currYear, currMonth, i);
+        const status:string = isDateInRange(dateToCheck);
+        liTag += `<li class="${status}">${i}</li>`;
       }
-  
-      /*for (let i = 1; i <= lastDateofMonth; i++) {
-        let isToday =
-          i === date.getDate() &&
-          currMonth === new Date().getMonth() &&
-          currYear === new Date().getFullYear()
-            ? 'active'
-            : '';
-        liTag += `<li class="${isToday}">${i}</li>`;
-      }*/
   
       for (let i = lastDayofMonth; i < 6; i++) {
         liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`;
