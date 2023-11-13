@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
-
 import LoginScreen from './Login'
 import Home from'./HomeScreenFramework/Home';
 
