@@ -14,7 +14,7 @@ const holidayRequests  = [{
     id: 'user1',
     startDate: '22/12/2024',
     endDate: '02/01/2025',
-    status: 'denied'
+    status: 'reviewPending'
 }, {
         id: 'user2',
         startDate: '25/12/2024',
@@ -30,9 +30,15 @@ const LeftList: React.FC<LeftListProps> = ({ content }) => {
     );
 
     
-    const listItems = targetUser.map(request =>
-        <li><a href="">{request.startDate+", "+request.endDate +": "+request.status}</a></li>
-    );
+    const listItems = targetUser.map(request => {
+        if (request.status == 'approved') {
+            return <li><a className="approved">{request.startDate+", "+request.endDate +": "+request.status}</a></li>
+        } else {
+            return <li><a className="denied">{request.startDate+", "+request.endDate +": "+request.status}</a></li>
+        };
+
+    });
+        
 
     return (
         <div className="holidayRequestList">
