@@ -14,9 +14,11 @@
 }
 
 .holidayRequestList * {
+  list-style-type: none;
   font-family: 'Poppins',sans-serif;
   color: #ffffff;
   letter-spacing: 0.5px;
+  padding: 5px;
   outline: none;
   border: none;
 }

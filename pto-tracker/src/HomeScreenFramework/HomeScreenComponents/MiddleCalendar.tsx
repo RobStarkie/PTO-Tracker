@@ -9,7 +9,6 @@ const Calendar: React.FC = () => {
     const [currentDate, setCurrentDate] = useState<string>('');
 
     function isDateInRange(dateToCheck: Date, startDate: Date, endDate: Date): boolean {
-        console.log(dateToCheck >= startDate && dateToCheck <= endDate);
         return dateToCheck >= startDate && dateToCheck <= endDate;
     }
 
@@ -44,9 +43,9 @@ const Calendar: React.FC = () => {
         liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
       }
 
-      /*const currentDate = new Date();
-      const startDate = new Date('2023-11-01');
-      const endDate = new Date('2023-11-06');
+      const currentDate = new Date();
+      const startDate = new Date('01-01-2023');
+      const endDate = new Date('10-15-2023');
 
       for (let i = 1; i <= lastDateofMonth; i++) {
       let isPending =
@@ -54,9 +53,9 @@ const Calendar: React.FC = () => {
             ? 'active'
             : '';
         liTag += `<li class="${isPending}">${i}</li>`;
-      }*/
+      }
   
-      for (let i = 1; i <= lastDateofMonth; i++) {
+      /*for (let i = 1; i <= lastDateofMonth; i++) {
         let isToday =
           i === date.getDate() &&
           currMonth === new Date().getMonth() &&
@@ -64,7 +63,7 @@ const Calendar: React.FC = () => {
             ? 'active'
             : '';
         liTag += `<li class="${isToday}">${i}</li>`;
-      }
+      }*/
   
       for (let i = lastDayofMonth; i < 6; i++) {
         liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`;
