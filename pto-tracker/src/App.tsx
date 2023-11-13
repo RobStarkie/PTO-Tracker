@@ -21,7 +21,7 @@ const App: React.FC<AppProps> = () => {
 
   
   return (
-    <div className="App">
+    <div className="App" style={{backgroundImage: "url('https://cdn.wallpapersafari.com/16/15/t5To9s.jpg')"}}>
       {isLoggedIn ? (
         <Home handleLogout={handleLogout} />
       ) : (
