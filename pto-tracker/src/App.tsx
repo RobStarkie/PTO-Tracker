@@ -10,7 +10,7 @@ interface AppProps {
 }
 
 const App: React.FC<AppProps> = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Function to handle login
   const handleLogin = () => {
