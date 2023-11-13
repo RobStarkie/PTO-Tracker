@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import LoginScreen from './Login'
+import Home from './Home'
 
 interface AppProps {
   // You can define any props here
@@ -25,7 +27,7 @@ const App: React.FC<AppProps> = () => {
       {isLoggedIn ? (
         <Home handleLogout={handleLogout} />
       ) : (
-        <Login handleLogin={handleLogin} />
+        <LoginScreen handleLogin={handleLogin} />
       )}
     </div>
   );
