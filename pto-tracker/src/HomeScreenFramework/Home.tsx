@@ -1,5 +1,5 @@
 import React from "react";
-import '.homescreen.css';
+import './Home.css';
 import TopBar from './HomeScreenComponents/TopBar';
 import LeftList from './HomeScreenComponents/LeftList';
 import MiddleCalendar from './HomeScreenComponents/MiddleCalendar';
