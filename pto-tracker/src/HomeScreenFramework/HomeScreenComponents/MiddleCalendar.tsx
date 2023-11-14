@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import './MiddleCalendar.css'
 
-const Calendar: React.FC = () => {
+interface MiddleCalendarProps {
+    content: { id: string; startDate: string; endDate: string; status: string; }[];
+}
+
+
+const Calendar: React.FC<MiddleCalendarProps> = ({content}) => {
 
     const [currYear, setCurrYear] = useState(new Date().getFullYear());
     const [currMonth, setCurrMonth] = useState(new Date().getMonth());
     const [daysTag, setDaysTag] = useState<JSX.Element | null>(null);
     const [currentDate, setCurrentDate] = useState<string>('');
-
-    type DateRange = [Date, Date, string];
-
-    const dateRanges: DateRange[] = [
-        [new Date('2023-10-31'), new Date('2023-11-11'), "pending"],
-        [new Date('2024-01-15'), new Date('2024-01-17'), "confirmed"],
-        [new Date('2023-12-01'), new Date('2023-12-04'), "confirmed"]
-]
+    
 
     function isDateInRange(dateToCheck: Date): string {
         var output:string = '';
@@ -22,9 +20,9 @@ const Calendar: React.FC = () => {
         if (dateToCheck.getDate() == currentDate.getDate() && dateToCheck.getMonth() == currentDate.getMonth() && dateToCheck.getFullYear() == currentDate.getFullYear()) {
             return 'active';
         }
-        dateRanges.forEach(([startDate, endDate, status]) => {
-            if (dateToCheck >= startDate && dateToCheck <= endDate) {
-                output = status;
+        content.forEach((request) => {
+            if (dateToCheck >= new Date(request.startDate) && dateToCheck <= new Date(request.endDate)) {
+                output = request.status;
                 return;
             }
         })
