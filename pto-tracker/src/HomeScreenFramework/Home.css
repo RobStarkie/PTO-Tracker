@@ -6,6 +6,10 @@
     justify-content: center;
 }
 
+.fixedTopBar {
+    height: 10vh;
+    width: 100vh;
+}
 .containers div {
     padding: 20px;
 }

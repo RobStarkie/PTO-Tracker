@@ -7,14 +7,14 @@ import RightAddRequest from './HomeScreenComponents/RightAddRequest';
 
 
 interface HomeProps {
-    handleLogout: () => void;
+    handleLogout: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
 const Home: React.FC<HomeProps> = ({ handleLogout}) => {
     return (
         <div id = "homePage">
             <div id = "fixedTopBar">
-                <div className="TopBar"> <TopBar content=""></TopBar></div>
+                <TopBar handleLogout={handleLogout}></TopBar>
                 <div className = "horizontal-line"></div>
             </div>
             <div className="containers" id="homeScreenContainers">
