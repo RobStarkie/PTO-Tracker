@@ -1,5 +1,5 @@
 import React from "react";
-import './TopBar.css'
+import logo from "../../logo.png";
 
 interface TopBarProps {
     content: string;
@@ -7,9 +7,7 @@ interface TopBarProps {
 
 const TopBar: React.FC<TopBarProps> = ({ content }) => {
     return (
-        <div>
-
-        </div>
+        <div></div>
     );
 };
 
