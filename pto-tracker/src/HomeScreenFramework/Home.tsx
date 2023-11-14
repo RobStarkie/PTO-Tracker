@@ -23,10 +23,10 @@ const Home: React.FC<HomeProps> = ({ handleLogout}) => {
         endDate: '2023-12-12',
         status: 'pending'
     }, {
-            id: 'user2',
-            startDate: '2024-01-09',
-            endDate: '2024-01-13',
-            status: 'confirmed'
+        id: 'user2',
+        startDate: '2024-01-09',
+        endDate: '2024-01-13',
+        status: 'confirmed'
     }];
 
 

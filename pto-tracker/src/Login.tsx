@@ -46,8 +46,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin }) => {
             <img src={logo} className='logo'></img>
             {emailSent &&(
               <div>
-              <label htmlFor="username">Username</label>
-              <input type="text" placeholder="Email or Phone" id="username" required onChange={e =>{
+              <label htmlFor="username">Email Address</label>
+              <input type="text" placeholder="Email" id="username" required onChange={e =>{
                   setUsername(e.target.value);
                   e.preventDefault();
                 }} />
