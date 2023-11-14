@@ -15,9 +15,8 @@ const RightAddRequest: React.FC<RightAddRequestProps> = ({ content }) => {
       };
 
     return (
-        <div className="rightComponentContainer">
-            
-            <form className="rightComponentForm">
+        <div className="rightComponentContainer"> 
+            <div className="rightComponentForm">
                 <h1 className="rightComponentHeader">Enter a New Request</h1>
                 <label htmlFor="startDate">Start Date</label>
                 <input type="text" placeholder="dd/mm/yyyy" id="startDate" required onChange={e =>{
@@ -33,7 +32,7 @@ const RightAddRequest: React.FC<RightAddRequestProps> = ({ content }) => {
                 }}/>
 
                 <button onClick={handleNewHolidayRequest}>Submit New Request</button>    
-            </form>
+            </div>
         </div>
     );
 };

@@ -11,17 +11,36 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ handleLogout}) => {
+
+    const holidayRequests  = [{
+        id: 'user1',
+        startDate: '2023-11-01',
+        endDate: '2023-11-06',
+        status: 'confirmed'
+    }, {
+        id: 'user1',
+        startDate: '2023-12-10',
+        endDate: '2023-12-12',
+        status: 'pending'
+    }, {
+        id: 'user2',
+        startDate: '2024-01-09',
+        endDate: '2024-01-13',
+        status: 'confirmed'
+    }];
+
+
     return (
         <div id = "homePage">
             <div id = "fixedTopBar">
                 <TopBar handleLogout={handleLogout}></TopBar>
                 <div className = "horizontal-line"></div>
             </div>
-            <div className="containers" id="homeScreenContainers">
-                <div className="leftList"><LeftList content=''></LeftList></div>
-                <div className="middleCalendar"><Calendar></Calendar></div>
-                <div className="rightAddRequest"><RightAddRequest content=''></RightAddRequest></div>
-            </div>
+            <ul className="horizontal-list">
+                <li><LeftList content={holidayRequests}></LeftList></li>
+                <li><Calendar content={holidayRequests}></Calendar></li>
+                <li><RightAddRequest content=''></RightAddRequest></li>
+            </ul>
         </div>
     );
 };
