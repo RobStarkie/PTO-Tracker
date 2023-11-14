@@ -15,8 +15,7 @@ const RightAddRequest: React.FC<RightAddRequestProps> = ({ content }) => {
       };
 
     return (
-        <div className="rightComponentContainer">
-            
+        <div className="rightComponentContainer"> 
             <form className="rightComponentForm">
                 <h1 className="rightComponentHeader">Enter a New Request</h1>
                 <label htmlFor="startDate">Start Date</label>

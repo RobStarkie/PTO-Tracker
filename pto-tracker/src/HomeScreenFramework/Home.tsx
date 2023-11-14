@@ -36,11 +36,11 @@ const Home: React.FC<HomeProps> = ({ handleLogout}) => {
                 <div className="TopBar"> <TopBar content=""></TopBar></div>
                 <div className = "horizontal-line"></div>
             </div>
-            <div className="containers" id="homeScreenContainers">
-                <div className="leftList"><LeftList content={holidayRequests}></LeftList></div>
-                <div className="middleCalendar"><Calendar content={holidayRequests}></Calendar></div>
-                <div className="rightAddRequest"><RightAddRequest content=''></RightAddRequest></div>
-            </div>
+            <ul className="horizontal-list">
+                <li><LeftList content=''></LeftList></li>
+                <li><Calendar></Calendar></li>
+                <li><RightAddRequest content=''></RightAddRequest></li>
+            </ul>
         </div>
     );
 };

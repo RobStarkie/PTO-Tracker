@@ -1,21 +1,7 @@
-.rightComponentForm{
-    height: 590px;
+.rightComponentContainer{
+    height: 570px;
     width: 400px;
-    background-color: rgba(255,255,255,0.13);
-    position: absolute;
-    transform: translate(-50%,-50%);
-    left: 130%;
-    top: 70%;
-    border-radius: 10px;
+    margin-top: 10px;
     backdrop-filter: blur(10px);
-    border: 2px solid rgba(255,255,255,0.1);
-    box-shadow: 0 0 40px rgba(8,7,16,0.6);
-    padding: 50px 35px;
-}
-f.rightComponentFormrm *{
-    font-family: 'Poppins',sans-serif;
-    color: #ffffff;
-    letter-spacing: 0.5px;
-    outline: none;
-    border: none;
+
 }

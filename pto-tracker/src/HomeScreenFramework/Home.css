@@ -1,18 +1,24 @@
-.containers{
-    position: relative;
+/* Horizontal List */
+.horizontal-list {
     display: flex;
-    flex-direction: column; /* Stacks items vertically */
-    align-items: center;
-    justify-content: center;
-}
-
-.containers div {
+    list-style: none;
     padding: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
-@media screen and (min-width: 900px) {
-    #homeScreenContainers {
-        display: flex;
-        flex-direction: row; /* Stacks items vertically */
+.horizontal-list li {
+    margin-right: 20px; /* Adjust spacing between list items */
+}
+
+/* Media Query for Vertical List */
+@media screen and (max-width: 1400px) {
+    .horizontal-list {
+        flex-direction: column;
+    }
+
+    .horizontal-list li {
+        margin-right: 0; /* Remove right margin for vertical layout */
+        margin-bottom: 10px; /* Add spacing between list items in vertical layout */
     }
 }
