@@ -67,6 +67,11 @@ form h3{
     text-align: center;
 }
 
+form p{
+    padding: 10px;
+    margin-top: 50px;
+}
+
 form h2 {
     font-size: 13px;
     font-weight: 300;
