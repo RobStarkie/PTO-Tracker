@@ -45,7 +45,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin }) => {
             <h3>Welcome</h3>
             <img src={logo} className='logo'></img>
             {emailSent &&(
-              <div>
+              <div style={{textAlign:'start'}}>
               <label htmlFor="username">Email Address</label>
               <input type="text" placeholder="Email" id="username" required onChange={e =>{
                   setUsername(e.target.value);
@@ -59,7 +59,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin }) => {
               )}
 
               {showForgotPassword && (
-                <div>
+                <div style={{textAlign:'start'}}>
                   <label htmlFor="password">Password</label>
                   <input type="password" placeholder="Password" id="password" required onChange={e => {
                       setPassword(e.target.value);
@@ -68,7 +68,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin }) => {
 
                   <button onClick={handleLoginClick}>Log In</button>
 
-                  <a href="#" onClick={handleForgotPasswordClick}><h2>Forgot Password</h2></a>
+                  <a href="#" onClick={handleForgotPasswordClick}><h2 style={{textAlign:'center'}}>Forgot Password</h2></a>
                 </div>
               )}
             </div>

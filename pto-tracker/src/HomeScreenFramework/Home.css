@@ -3,12 +3,22 @@
     display: flex;
     list-style: none;
     padding: 30px;
+    margin-top: 70px;
     align-items: center;
     flex-wrap: wrap; /* Allow items to wrap onto the next line */
 }
 
 .horizontal-list li {
     padding: 10px;
+}
+
+.background-shapes {
+    transform: scaleY(-1);
+    width: 99vw;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
 }
 
 /* Media Query for Vertical List */
