@@ -14,7 +14,7 @@ const Home: React.FC<HomeProps> = ({ handleLogout}) => {
     return (
         <div id = "homePage">
             <div id = "fixedTopBar">
-                <TopBar content=""></TopBar>
+                <div className="TopBar"> <TopBar content=""></TopBar></div>
                 <div className = "horizontal-line"></div>
             </div>
             <div className="containers" id="homeScreenContainers">
