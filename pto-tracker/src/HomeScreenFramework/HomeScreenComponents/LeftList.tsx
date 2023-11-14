@@ -25,11 +25,11 @@ const LeftList: React.FC<LeftListProps> = ({ content }) => {
 
     return (
         <div className="holidayRequestList">
-            <form className="holidayRequestListForm">
+            <div className="holidayRequestListForm">
                 <h1 className="listHeader">Holiday Requests</h1>
                 <pre> </pre>
                 <ul>{listItems}</ul>
-            </form>
+            </div>
             
         </div>
     );

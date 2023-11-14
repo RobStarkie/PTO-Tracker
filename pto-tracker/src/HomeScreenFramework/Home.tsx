@@ -37,8 +37,8 @@ const Home: React.FC<HomeProps> = ({ handleLogout}) => {
                 <div className = "horizontal-line"></div>
             </div>
             <ul className="horizontal-list">
-                <li><LeftList content=''></LeftList></li>
-                <li><Calendar></Calendar></li>
+                <li><LeftList content={holidayRequests}></LeftList></li>
+                <li><Calendar content={holidayRequests}></Calendar></li>
                 <li><RightAddRequest content=''></RightAddRequest></li>
             </ul>
         </div>

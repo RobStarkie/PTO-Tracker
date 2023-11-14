@@ -3,12 +3,8 @@
     display: flex;
     list-style: none;
     padding: 20px;
-    justify-content: center;
     align-items: center;
-}
-
-.horizontal-list li {
-    margin-right: 20px; /* Adjust spacing between list items */
+    flex-wrap: wrap; /* Allow items to wrap onto the next line */
 }
 
 /* Media Query for Vertical List */
@@ -16,7 +12,6 @@
     .horizontal-list {
         flex-direction: column;
     }
-
     .horizontal-list li {
         margin-right: 0; /* Remove right margin for vertical layout */
         margin-bottom: 10px; /* Add spacing between list items in vertical layout */
