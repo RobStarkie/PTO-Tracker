@@ -3,10 +3,9 @@ import './LineManager.css';
 
 
 interface LineManagerProps {
-    handleLogout: () => void;
 }
 
-const LineManagerPage: React.FC<LineManagerProps> = ({ handleLogout}) => {
+const LineManagerPage: React.FC<LineManagerProps> = () => {
 
 
 
