@@ -33,8 +33,8 @@ const App: React.FC<AppProps> = () => {
             <Routes>
               <Route path="/" element={<Layout handleLogout={handleLogout} />}>
                 <Route index element={<Home handleLogout={handleLogout} />}/>
-                <Route path="team-view" element={<LineManagerPage handleLogout={handleLogout}/>} />
-                <Route path="account" element={<LineManagerPage handleLogout={handleLogout}/>} />
+                <Route path="team-view" element={<LineManagerPage/>} />
+                <Route path="account" element={<LineManagerPage/>} />
               </Route>
             </Routes>
           </BrowserRouter>
