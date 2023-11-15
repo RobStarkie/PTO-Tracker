@@ -1,0 +1,71 @@
+
+.SUACBody{
+    background-color: #000000;
+}
+
+.SUACForm{
+    height: 620px;
+    width: 400px;
+    background-color: rgba(255,255,255,0.13);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+}
+.SUACForm *{
+    font-family: 'Poppins',sans-serif;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+
+.SUACH1 {
+    font-style: bold;
+    color: black;
+}
+
+.SUACH2 {
+    font-size: 20px;
+    font-weight: 300;
+    padding: 20px;
+    padding-top: 30px;
+    color: black;
+}
+
+.SUACPWLabel{
+    padding: 5px;
+    margin-top: 30px;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 500;
+}
+.SUACPasswordInput{
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(133, 133, 133, 0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #000;
+}
+
+.SUACButton {
+    width: 100%;
+    margin-top: 30px;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}

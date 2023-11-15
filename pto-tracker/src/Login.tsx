@@ -5,10 +5,11 @@ import logo from './logo.png'
 // Define the props interface if needed
 interface LoginScreenProps {
     handleLogin: () => void;
+    handleUsername: (value: string | ((prevVar: string) => string)) => void;
 }
 
 // Functional component
-const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername }) => {
 
   const [username, setUsername] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
@@ -34,6 +35,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin }) => {
     setEmailSentClick();
   };
 
+  const handleUsernameInput = (tempUsername: string) => {
+    handleUsername(tempUsername);
+  }
 
   return (
     <body>
@@ -49,6 +53,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin }) => {
               <label htmlFor="username">Email Address</label>
               <input type="text" placeholder="Email" id="username" required onChange={e =>{
                   setUsername(e.target.value);
+                  handleUsernameInput(e.target.value);
                   e.preventDefault();
                 }} />
 
@@ -66,7 +71,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin }) => {
                       e.preventDefault();
                     }}/>
 
-                  <button onClick={handleLoginClick}>Log In</button>
+                  <button type="button" onClick={handleLoginClick}>Log In</button>
 
                   <a href="#" onClick={handleForgotPasswordClick}><h2 style={{textAlign:'center'}}>Forgot Password</h2></a>
                 </div>
@@ -83,6 +88,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin }) => {
         </form>
     </body>
   );
+  
 };
 
 export default LoginScreen;
