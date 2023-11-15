@@ -4,10 +4,12 @@ import TopBar from './HomeScreenComponents/TopBar';
 import LeftList from './HomeScreenComponents/LeftList';
 import Calendar from './HomeScreenComponents/MiddleCalendar';
 import RightAddRequest from './HomeScreenComponents/RightAddRequest';
+import HolidayRemaining from './HomeScreenComponents/HolidayRemaining';
+import shapes from './shapes.svg';
 
 
 interface HomeProps {
-    handleLogout: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+    handleLogout: () => void;
 }
 
 const Home: React.FC<HomeProps> = ({ handleLogout}) => {
@@ -29,18 +31,26 @@ const Home: React.FC<HomeProps> = ({ handleLogout}) => {
         status: 'confirmed'
     }];
 
+    const holidayRemaining = {
+        remaining : 0,
+        pending: 0,
+        total: 0,
+        approved: 0,
+    }
+
 
     return (
         <div id = "homePage">
             <div id = "fixedTopBar">
                 <TopBar handleLogout={handleLogout}></TopBar>
-                <div className = "horizontal-line"></div>
             </div>
             <ul className="horizontal-list">
                 <li><LeftList content={holidayRequests}></LeftList></li>
                 <li><Calendar content={holidayRequests}></Calendar></li>
                 <li><RightAddRequest content=''></RightAddRequest></li>
             </ul>
+            <div><HolidayRemaining content={holidayRemaining}></HolidayRemaining></div>
+            <img src={shapes} className="background-shapes"></img>
         </div>
     );
 };

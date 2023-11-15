@@ -5,18 +5,28 @@
     border-radius: 10px;
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.1);
-    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
     padding: 50px 35px;
 }
 
 .rightComponentForm *{
     font-family: 'Poppins',sans-serif;
-    color: #ffffff;
+    color: #000000;
     letter-spacing: 0.5px;
     outline: none;
     border: none;
   }
 
   .rightComponentForm button {
+    width: 100%;
+    margin-top: 40px;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
     color: black;
+    color: #FFF;
   }

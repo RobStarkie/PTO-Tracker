@@ -1,22 +1,21 @@
 
 .holidayRequestListForm{
-  height: 60vh;
-  width: 40vh;
+  height: 590px;
+  width: 400px;
   background-color: rgba(255,255,255,0.13);
   border-radius: 10px;
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255,255,255,0.1);
-  box-shadow: 0 0 40px rgba(8,7,16,0.6);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
   padding: 20px 15px;
 }
 .holidayRequestListForm *{
   font-family: 'Poppins',sans-serif;
-  color: #ffffff;
+  color: #000000;
   letter-spacing: 0.5px;
   outline: none;
   border: none;
   list-style: none;
-  align-items: center;
 }
 .holidayRequestList.listHeader {
     font-style: italic;
@@ -30,22 +29,24 @@
 }
 
 .holidayRequestListForm li {
-  padding-top: 10px;
+  color: #ffffff;
 }
 
 .approved {
     display: block;
-    padding: 10px;
+    padding: 5px;
     background-color: green;
     text-decoration: none;
     border-radius: 3px;
+    color: #ffffff;
   }
 
 
 .denied{
     display: block;
-    padding: 10px;
+    padding: 5px;
     background-color: red;
     text-decoration: none;
     border-radius: 3px;
+    color: #ffffff;
  }

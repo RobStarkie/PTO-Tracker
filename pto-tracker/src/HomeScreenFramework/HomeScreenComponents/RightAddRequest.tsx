@@ -30,8 +30,7 @@ const RightAddRequest: React.FC<RightAddRequestProps> = ({ content }) => {
                     setEndDate(e.target.value);
                     e.preventDefault();
                 }}/>
-
-                <button onClick={handleNewHolidayRequest}>Submit New Request</button>    
+                <button className="request-button" onClick={handleNewHolidayRequest} >Submit New Request</button>    
             </div>
         </div>
     );
