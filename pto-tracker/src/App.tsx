@@ -7,6 +7,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LineManagerPage from './LineManagerPage/LineManager';
 import Layout from './Layout';
+import AccountSettingsFramework from './AccountSettings/AccountSettingsFramework';
 
 interface AppProps {
   // You can define any props here
@@ -14,6 +15,7 @@ interface AppProps {
 
 const App: React.FC<AppProps> = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
 
   // Function to handle login
   const handleLogin = () => {
@@ -25,6 +27,12 @@ const App: React.FC<AppProps> = () => {
     setIsLoggedIn(false);
   };
 
+  const handleUsername =( tempUsername: React.SetStateAction<string>) =>  {
+    setUsername(tempUsername);
+  }
+
+
+
   
   return (
     <div className="App">
@@ -34,12 +42,12 @@ const App: React.FC<AppProps> = () => {
               <Route path="/" element={<Layout handleLogout={handleLogout} />}>
                 <Route index element={<Home handleLogout={handleLogout} />}/>
                 <Route path="team-view" element={<LineManagerPage handleLogout={handleLogout}/>} />
-                <Route path="account" element={<LineManagerPage handleLogout={handleLogout}/>} />
+                <Route path="account" element={<AccountSettingsFramework handleLogout={handleLogout} username={username} />} />
               </Route>
             </Routes>
           </BrowserRouter>
       ) : (
-        <LoginScreen handleLogin={handleLogin} />
+        <LoginScreen handleLogin={handleLogin} handleUsername={handleUsername} />
       )}
     </div>
   );
