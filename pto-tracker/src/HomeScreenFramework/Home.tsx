@@ -1,6 +1,5 @@
 import React from "react";
 import './Home.css';
-import TopBar from './HomeScreenComponents/TopBar';
 import LeftList from './HomeScreenComponents/LeftList';
 import Calendar from './HomeScreenComponents/MiddleCalendar';
 import RightAddRequest from './HomeScreenComponents/RightAddRequest';
@@ -41,9 +40,6 @@ const Home: React.FC<HomeProps> = ({ handleLogout}) => {
 
     return (
         <div id = "homePage">
-            <div id = "fixedTopBar">
-                <TopBar handleLogout={handleLogout}></TopBar>
-            </div>
             <ul className="horizontal-list">
                 <li><LeftList content={holidayRequests}></LeftList></li>
                 <li><Calendar content={holidayRequests}></Calendar></li>
