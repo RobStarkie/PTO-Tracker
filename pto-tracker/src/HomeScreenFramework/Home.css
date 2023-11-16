@@ -1,15 +1,15 @@
 /* Horizontal List */
 .horizontal-list {
-    display: flex;
     list-style: none;
     padding: 30px;
     margin-top: 70px;
     align-items: center;
-    flex-wrap: wrap; /* Allow items to wrap onto the next line */
+    display: flex;
 }
 
 .horizontal-list li {
     padding: 10px;
+    margin: auto;
 }
 
 .background-shapes {
@@ -22,8 +22,9 @@
 }
 
 /* Media Query for Vertical List */
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 700px) {
     .horizontal-list {
+        display: block;
         flex-direction: column;
     }
     .horizontal-list li {

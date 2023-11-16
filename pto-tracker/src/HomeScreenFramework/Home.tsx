@@ -44,9 +44,8 @@ const Home: React.FC<HomeProps> = ({ handleLogout}) => {
                 <li><LeftList content={holidayRequests}></LeftList></li>
                 <li><Calendar content={holidayRequests}></Calendar></li>
                 <li><RightAddRequest content=''></RightAddRequest></li>
+                <li><HolidayRemaining content={holidayRemaining}></HolidayRemaining></li>
             </ul>
-            <div><HolidayRemaining content={holidayRemaining}></HolidayRemaining></div>
-            <img src={shapes} className="background-shapes"></img>
         </div>
     );
 };

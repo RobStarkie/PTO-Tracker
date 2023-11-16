@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import './LineManager.css';
 import Tooltip from "@mui/material/Tooltip";
 import { profile } from "console";
+import PTORequests from './TeamRequests'
 
 
 interface LineManagerProps {
@@ -30,7 +31,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         },
         {
             user : "Robert Starkie",
-            profile_picture : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgfQVsavMhO0GRho8eTKGOpUyyDgmQx8mA6B6M6ovOcA&s",
+            profile_picture : "https://pics.craiyon.com/2023-07-15/dc2ec5a571974417a5551420a4fb0587.webp",
             holidays : [
                 {
                     status : "pending",
@@ -40,7 +41,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                 {
                     status : "pending",
                     start : "2023-11-19",
-                    end : "2023-11-24"
+                    end : "2023-12-24"
                 }
             ]
         }
@@ -79,8 +80,12 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         'December',
       ];
 
+    const handleUserClick = () => {
+
+    }
+
     var user_template = (startDate:number, endDate:number, holiday:holiday) => {
-        return <div className='users-row' style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>
+        return <div className='users-row' onClick={handleUserClick} style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>
     }
 
     const renderCalendar = () => {
@@ -139,17 +144,20 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     }
 
     return (
-        <div className="calendar-box">
-            <div className="icons">
-            <span id="prev" className="material-symbols-rounded" onClick={() => handleIconClick("prev")}>
-              chevron_left
-            </span>
-            <span id="next" className="material-symbols-rounded"onClick={() => handleIconClick("next")}>
-              chevron_right
-            </span>
-            <h3>{months[currMonth]+" "+currYear}</h3>
-          </div>
-            {daysTag}
+        <div className="line-mananger-body">
+            <div className="calendar-box">
+                <div className="icons">
+                <span id="prev" className="material-symbols-rounded" onClick={() => handleIconClick("prev")}>
+                chevron_left
+                </span>
+                <span id="next" className="material-symbols-rounded"onClick={() => handleIconClick("next")}>
+                chevron_right
+                </span>
+                <h3>{months[currMonth]+" "+currYear}</h3>
+            </div>
+                {daysTag}
+            </div>
+            <PTORequests></PTORequests>
         </div>
     );
 };
