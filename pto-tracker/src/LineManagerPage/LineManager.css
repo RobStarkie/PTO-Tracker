@@ -40,6 +40,16 @@
     opacity: 80%;
 }
 
+.team-member {
+
+}
+
+.team-member .profile-picture {
+    width: 35px;
+    border-radius: 100px;
+    margin-right: 10px;
+}
+
 .icons{
     display: flex;
   }

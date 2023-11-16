@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './LineManager.css';
 import Tooltip from "@mui/material/Tooltip";
+import { profile } from "console";
 
 
 interface LineManagerProps {
@@ -13,11 +14,12 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     const [currentDate, setCurrentDate] = useState<string>('');
 
     type holiday = {status:string,start:string,end:string};
-    type user_details = {user:string, holidays:holiday[]};
+    type user_details = {user:string, profile_picture:string, holidays:holiday[]};
 
     const team_members : user_details[] = [
         {
-            user : "Matt",
+            user : "Matt Connolly",
+            profile_picture : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgfQVsavMhO0GRho8eTKGOpUyyDgmQx8mA6B6M6ovOcA&s",
             holidays : [
                 {
                     status : "confirmed",
@@ -27,7 +29,8 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             ]
         },
         {
-            user : "Rob",
+            user : "Robert Starkie",
+            profile_picture : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgfQVsavMhO0GRho8eTKGOpUyyDgmQx8mA6B6M6ovOcA&s",
             holidays : [
                 {
                     status : "pending",
@@ -40,52 +43,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                     end : "2023-11-24"
                 }
             ]
-        },
-        {
-            user : "Rob",
-            holidays : [
-                {
-                    status : "pending",
-                    start : "2023-11-01",
-                    end : "2023-11-03"
-                },
-                {
-                    status : "pending",
-                    start : "2023-11-19",
-                    end : "2023-11-24"
-                }
-            ]
-        },
-        {
-            user : "Rob",
-            holidays : [
-                {
-                    status : "pending",
-                    start : "2023-11-01",
-                    end : "2023-11-03"
-                },
-                {
-                    status : "pending",
-                    start : "2023-11-19",
-                    end : "2023-11-24"
-                }
-            ]
-        },
-        {
-            user : "Rob",
-            holidays : [
-                {
-                    status : "pending",
-                    start : "2023-11-01",
-                    end : "2023-11-03"
-                },
-                {
-                    status : "pending",
-                    start : "2023-11-19",
-                    end : "2023-12-24"
-                }
-            ]
-        },
+        }
     ];
 
     useEffect(() => {
@@ -121,6 +79,10 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         'December',
       ];
 
+    var user_template = (startDate:number, endDate:number, holiday:holiday) => {
+        return <div className='users-row' style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>
+    }
+
     const renderCalendar = () => {
         const date = new Date();
         const firstDayofMonth = new Date(currYear, currMonth, 1).getDay();
@@ -144,7 +106,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
 
         for (let i = 0; i < team_members.length; i++) {
             const team_member = team_members[i];
-            grid_items.push(<div style={{gridColumnStart:1, gridColumnEnd:3}}>{team_member.user}</div>);
+            grid_items.push(<div className="team-member" style={{gridColumnStart:1, gridColumnEnd:3}}><img className="profile-picture" src={team_member.profile_picture}></img>{team_member.user}</div>);
             for (let j = 0; j < team_member.holidays.length; j++) {
                 const holiday = team_member.holidays[j];
                 if (new Date(holiday.start).getFullYear() == currYear) {
@@ -152,11 +114,12 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                         const startDate = new Date(holiday.start).getDate();
                         if (new Date(holiday.end).getMonth() == currMonth) {
                             const endDate = new Date(holiday.end).getDate();
-                            grid_items.push(<div className='users-row' style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>);
+                            grid_items.push(user_template(startDate, endDate, holiday));
+                            
                         }
                         else {
                             const endDate = lastDateofMonth;
-                            grid_items.push(<div className='users-row' style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>);
+                            grid_items.push(user_template(startDate, endDate, holiday));
                         }
                         
                     }
@@ -164,9 +127,10 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                         if (new Date(holiday.end).getMonth() == currMonth) {
                             const endDate = new Date(holiday.end).getDate();
                             const startDate = 1;
-                            grid_items.push(<div className='users-row' style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>);
+                            grid_items.push(user_template(startDate, endDate, holiday));
                         }
                     }  
+                    
                 }
             }
         }
