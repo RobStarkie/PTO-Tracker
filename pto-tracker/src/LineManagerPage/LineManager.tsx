@@ -147,28 +147,27 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             grid_items.push(<div style={{gridColumnStart:1, gridColumnEnd:3}}>{team_member.user}</div>);
             for (let j = 0; j < team_member.holidays.length; j++) {
                 const holiday = team_member.holidays[j];
-                if (new Date(holiday.start).getMonth() == currMonth) {
-                    const startDate = new Date(holiday.start).getDate();
-                    if (new Date(holiday.end).getMonth() == currMonth) {
-                        const endDate = new Date(holiday.end).getDate();
-                        grid_items.push(<div className='users-row' style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>);
+                if (new Date(holiday.start).getFullYear() == currYear) {
+                    if (new Date(holiday.start).getMonth() == currMonth) {
+                        const startDate = new Date(holiday.start).getDate();
+                        if (new Date(holiday.end).getMonth() == currMonth) {
+                            const endDate = new Date(holiday.end).getDate();
+                            grid_items.push(<div className='users-row' style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>);
+                        }
+                        else {
+                            const endDate = lastDateofMonth;
+                            grid_items.push(<div className='users-row' style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>);
+                        }
+                        
                     }
                     else {
-                        const endDate = lastDateofMonth;
-                        grid_items.push(<div className='users-row' style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>);
-                    }
-                    
+                        if (new Date(holiday.end).getMonth() == currMonth) {
+                            const endDate = new Date(holiday.end).getDate();
+                            const startDate = 1;
+                            grid_items.push(<div className='users-row' style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>);
+                        }
+                    }  
                 }
-                else {
-                    if (new Date(holiday.end).getMonth() == currMonth) {
-                        const endDate = new Date(holiday.end).getDate();
-                        const startDate = 1;
-                        grid_items.push(<div className='users-row' style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>);
-                    }
-                }
-                
-                
-                
             }
         }
         setDaysTag(<div className="calendar-grid">{grid_items}</div>);
@@ -184,7 +183,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             <span id="next" className="material-symbols-rounded"onClick={() => handleIconClick("next")}>
               chevron_right
             </span>
-            <h3>{months[currMonth]}</h3>
+            <h3>{months[currMonth]+" "+currYear}</h3>
           </div>
             {daysTag}
         </div>
