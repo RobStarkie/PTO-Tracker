@@ -13,5 +13,5 @@
 .holiday-remaining-box .content {
     width: 100%;
     display: flex;
-    position: absolute;
+    position: fixed;
 }

@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
 import './HolidayRemaining.css'
 import { PieChart } from '@mui/x-charts/PieChart';
-import { ChartsLegend } from "@mui/x-charts/ChartsLegend";
-import { ResponsiveChartContainer } from "@mui/x-charts";
 
 
 interface HolidayRemainingProps {
