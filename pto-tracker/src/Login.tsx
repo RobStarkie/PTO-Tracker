@@ -6,10 +6,11 @@ import logo from './logo.png'
 interface LoginScreenProps {
     handleLogin: () => void;
     handleUsername: (value: string | ((prevVar: string) => string)) => void;
+    handleAdmin: () => void;
 }
 
 // Functional component
-const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, handleAdmin }) => {
 
   const [username, setUsername] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
@@ -37,6 +38,12 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername }
 
   const handleUsernameInput = (tempUsername: string) => {
     handleUsername(tempUsername);
+  }
+
+  const checkAdmin = () => {
+    if(username == "admin") {
+      handleAdmin();
+    }
   }
 
   return (
@@ -71,7 +78,11 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername }
                       e.preventDefault();
                     }}/>
 
-                  <button type="button" onClick={handleLoginClick}>Log In</button>
+                  <button type="button" onClick={ e =>{
+                      handleLoginClick();
+                      checkAdmin();
+                      e.preventDefault();
+                    }}>Log In</button>
 
                   <a href="#" onClick={handleForgotPasswordClick}><h2 style={{textAlign:'center'}}>Forgot Password</h2></a>
                 </div>
