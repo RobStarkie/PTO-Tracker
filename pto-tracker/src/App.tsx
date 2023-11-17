@@ -9,6 +9,9 @@ import LineManagerPage from './LineManagerPage/LineManager';
 import Layout from './Layout';
 import AccountSettingsFramework from './AccountSettings/AccountSettingsFramework';
 import Admin from './AdminPage/Admin'
+import CreateNewUser from './AdminPage/AdminComponent/CreateNewUser';
+import EditUser from './AdminPage/AdminComponent/EditUser';
+
 interface AppProps {
   // You can define any props here
 }
@@ -37,10 +40,6 @@ const App: React.FC<AppProps> = () => {
     setAdmin(true);
   };
 
-
-
-
-
   return (
     <div className="App">
       {isLoggedIn ? (
@@ -51,6 +50,8 @@ const App: React.FC<AppProps> = () => {
                 <Route path="/" element={<Layout handleLogout={handleLogout} admin={isAdmin}/>}>
                   <Route index element={<Admin handleLogout={handleLogout} />}/>
                   <Route path="account" element={<AccountSettingsFramework handleLogout={handleLogout} username={username} />} />
+                  <Route path="createAccount" element={<CreateNewUser/>} />
+                  <Route path="EditUserAccount" element={<EditUser username={username}/>}/>
                 </Route>
               </Routes>
             </BrowserRouter>

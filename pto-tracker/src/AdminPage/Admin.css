@@ -1,36 +1,29 @@
-.AdminForm{
-    height: 590px;
-    width: 400px;
-    background-color: rgba(255,255,255,0.13);
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255,255,255,0.1);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-    padding: 20px 15px;
-    left: 15%;
-  }
-.AdminForm *{
-font-family: 'Poppins',sans-serif;
-color: #000000;
-letter-spacing: 0.5px;
-outline: none;
-border: none;
-list-style: none;
+
+.adminUserList {
+    display: flex;
+    list-style: none;
+    padding: 30px;
+    margin-top: 70px;
+    align-items: center;
+    flex-wrap: wrap; /* Allow items to wrap onto the next line */
 }
 
-.searchUserField {
-    visibility: hidden;
+.adminUserList li {
+    padding: 30px;
 }
 
-.userSearchBtn {
-    color:white;
-    background-color: red;
-    visibility: hidden;
+/* Media Query for Vertical List */
+@media screen and (max-width: 1400px) {
+    .adminUserList {
+        flex-direction: column;
+    }
+    .adminUserList li {
+        padding: 10px;
+        margin-right: 0; /* Remove right margin for vertical layout */
+        margin-bottom: 10px; /* Add spacing between list items in vertical layout */
+    }
 }
 
-.RegisterNewUserDiv {
-    width: 60vh;
-}
 
 
 
