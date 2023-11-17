@@ -19,8 +19,10 @@
 .calendar-grid .confirmed {
     background-color: green;
     transition: 0.3s;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 90%;
     width: 0%;
-    height: 100%;
     border-radius: 25px;
     overflow: hidden; /* Ensure content doesn't overflow during animation */
     transition: width 0.3s; /* Set transition for width property */
@@ -41,7 +43,9 @@
     background-color: rgb(95, 95, 95);
     transition: 0.3s;
     width: 0%;
-    height: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 90%;
     border-radius: 25px;
     overflow: hidden; /* Ensure content doesn't overflow during animation */
     transition: width 0.3s; /* Set transition for width property */

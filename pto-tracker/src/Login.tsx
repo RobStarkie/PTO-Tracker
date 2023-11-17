@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
 import logo from './logo.png'
+import SmallLoadingSpinner from './Components/SmallLoadingSpinner';
 
 // Define the props interface if needed
 interface LoginScreenProps {
@@ -15,6 +16,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername }
   const [password, setPassword] = useState<string | null>(null);
   const [showForgotPassword, setShowForgotPassword] = useState(true);
   const [emailSent, setEmailSent] = useState(true);
+  const [loginPressed, setLoginPressed] = useState(false);
 
   const handleForgotPasswordClick = () => {
     setShowForgotPassword(false);
@@ -27,8 +29,11 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername }
     setShowForgotPassword(true);
   };
 
-  const handleLoginClick = () => {
+  const handleLoginClick = async () => {
+    setLoginPressed(true);
+    await new Promise(r => setTimeout(r, 3000));
     handleLogin();
+    setLoginPressed(false);
   };
 
   const sendPasswordReset = () => {
@@ -71,7 +76,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername }
                       e.preventDefault();
                     }}/>
 
-                  <button type="button" onClick={handleLoginClick}>Log In</button>
+                  <button type="button" onClick={handleLoginClick}><div style={{display: `${!loginPressed?'none' : ''}`}}><SmallLoadingSpinner></SmallLoadingSpinner></div><div style={{display: `${loginPressed?'none' : ''}` }}>Log In</div></button>
 
                   <a href="#" onClick={handleForgotPasswordClick}><h2 style={{textAlign:'center'}}>Forgot Password</h2></a>
                 </div>

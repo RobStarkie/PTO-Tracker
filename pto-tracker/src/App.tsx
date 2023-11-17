@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import LoginScreen from './Login'
 import Home from'./HomeScreenFramework/Home';
-import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LineManagerPage from './LineManagerPage/LineManager';
 import Layout from './Layout';
