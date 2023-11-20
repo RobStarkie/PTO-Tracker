@@ -3,6 +3,10 @@ import './LineManager.css';
 import Tooltip from "@mui/material/Tooltip";
 import { profile } from "console";
 import PTORequests from './TeamRequests';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+import Modal from 'react-bootstrap/Modal';
+import { Button } from "react-bootstrap";
 
 interface LineManagerProps {
 }
@@ -13,6 +17,10 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     const [daysTag, setDaysTag] = useState<JSX.Element | null>(null);
     const [currentDate, setCurrentDate] = useState<string>('');
     const [show, setShow] = useState(false);
+    var user: number;
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     type holiday = {status:string,start:string,end:string};
     type user_details = {user:string,firstName:string, secondName:string, email:string, phoneNumber:string, profile_picture:string, holidays:holiday[]};
@@ -95,26 +103,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     var user_template = (startDate:number, endDate:number, holiday:holiday) => {
         return <div className='users-row' onClick={handleUserClick} style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>
     }
-
-    const userInfoPopUp = (username:string, firstName:string, secondName:string, email:string, phoneNumber:string) => {
-        alert(
-            "User: " + username +"\n"+
-            "Email: " + email+"\n"+
-            "Phone Number: " + phoneNumber+"\n"
-        );
-            
-        
-    }
-
-    function openModal() {
-        document.getElementById("myModal")!.style.display = "block";
-    }
-      
-      // Close the Modal
-    function closeModal() {
-        document.getElementById("myModal")!.style.display = "none";
-    }
-      
+    
 
     const renderCalendar = () => {
         const date = new Date();
@@ -139,7 +128,15 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
 
         for (let i = 0; i < team_members.length; i++) {
             const team_member = team_members[i];
-            grid_items.push(<div className="team-member" onClick={e=>{userInfoPopUp(team_member.user,team_member.firstName, team_member.secondName, team_member.email, team_member.phoneNumber)}} style={{gridColumnStart:1, gridColumnEnd:3}}><img className="profile-picture" src={team_member.profile_picture}></img>{team_member.user}</div>);
+            grid_items.push(<div className="team-member" style={{gridColumnStart:1, gridColumnEnd:3}}>
+                <button onClick={e => {
+                    handleShow();
+                    user=i;
+                }}>
+                <img className="profile-picture" src={team_member.profile_picture}></img>
+                    {team_member.user}
+                </button>
+                </div>);
             for (let j = 0; j < team_member.holidays.length; j++) {
                 const holiday = team_member.holidays[j];
                 if (new Date(holiday.start).getFullYear() == currYear) {
@@ -171,8 +168,28 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
 
     }
 
+    const userData = () => {
+        const team_member = team_members[user];
+        var data = "Username: "+team_member.user +"\n Email: "+ team_member.email +"\n Phone Number: "+team_member.phoneNumber;
+        return data;
+    }
+
     return (
         <div className="line-mananger-body">
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>User Details</Modal.Title>
+                </Modal.Header>
+
+                    $userData();
+                    
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            
             <div className="calendar-box">
                 <div className="icons">
                 <span id="prev" className="material-symbols-rounded" onClick={() => handleIconClick("prev")}>
@@ -191,3 +208,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
 };
 
 export default LineManagerPage;
+
+function CGRect(x: any, arg1: number, y: any, arg3: number, width: any, arg5: number, height: any, arg7: number): any {
+    throw new Error("Function not implemented.");
+}
