@@ -1,7 +1,9 @@
 
 .holidayRequestListForm{
-  height: 590px;
-  width: 400px;
+  height: 650px;
+  width: 100%;
+  min-width: 400px;
+  margin: auto;
   background-color: rgba(255,255,255,0.13);
   border-radius: 10px;
   backdrop-filter: blur(10px);
@@ -9,32 +11,31 @@
   box-shadow: 0 15px 40px rgba(0,0,0,0.12);
   padding: 20px 15px;
 }
+
 .holidayRequestListForm *{
   font-family: 'Poppins',sans-serif;
   color: #000000;
   letter-spacing: 0.5px;
   outline: none;
   border: none;
+  margin-left: 0;
+  padding: 0;
   list-style: none;
 }
 .holidayRequestList.listHeader {
     font-style: italic;
     color: red;
-
 }
 
-.holidayRequestListForm ul {
-  align-items: center;
-  justify-content: center;
-}
 
-.holidayRequestListForm li {
+.holidayRequestListForm ul li {
   color: #ffffff;
 }
 
-.approved {
-    display: block;
+.holidayRequestListForm .approved {
     padding: 5px;
+    height: 60px;
+    display: block;
     background-color: green;
     text-decoration: none;
     border-radius: 3px;
@@ -42,9 +43,9 @@
   }
 
 
-.denied{
-    display: block;
+.holidayRequestListForm .denied{
     padding: 5px;
+    height: 60px;
     background-color: red;
     text-decoration: none;
     border-radius: 3px;

@@ -2,9 +2,8 @@ import React from "react";
 import './Home.css';
 import LeftList from './HomeScreenComponents/LeftList';
 import Calendar from './HomeScreenComponents/MiddleCalendar';
-import RightAddRequest from './HomeScreenComponents/RightAddRequest';
+import RightAddRequest from "./HomeScreenComponents/RightAddRequest";
 import HolidayRemaining from './HomeScreenComponents/HolidayRemaining';
-import shapes from './shapes.svg';
 
 
 interface HomeProps {
@@ -44,9 +43,8 @@ const Home: React.FC<HomeProps> = ({ handleLogout}) => {
                 <li><LeftList content={holidayRequests}></LeftList></li>
                 <li><Calendar content={holidayRequests}></Calendar></li>
                 <li><RightAddRequest content=''></RightAddRequest></li>
+                <li><HolidayRemaining content={holidayRemaining}></HolidayRemaining></li>
             </ul>
-            <div><HolidayRemaining content={holidayRemaining}></HolidayRemaining></div>
-            <img src={shapes} className="background-shapes"></img>
         </div>
     );
 };

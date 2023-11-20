@@ -73,6 +73,7 @@ const Layout: React.FC<TopBarProps> = ({ handleLogout, admin }) => {
         </div>
       )}
     <Outlet />
+    <p style={{position:'fixed', bottom:0, left:'50%', zIndex:-1, display:'none'}}>Raytheon PTO Tracker App ©2023</p>
     </div>
   )
 }

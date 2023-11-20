@@ -15,9 +15,9 @@ const LeftList: React.FC<LeftListProps> = ({ content }) => {
     
     const listItems = targetUser.map(request => {
         if (request.status == 'confirmed') {
-            return <li><a className="approved">{request.startDate+", "+request.endDate +": "+request.status}</a></li>
+            return <li><div className="approved">{request.startDate+", "+request.endDate +": "+request.status}</div></li>
         } else {
-            return <li><a className="denied">{request.startDate+", "+request.endDate +": "+request.status}</a></li>
+            return <li><div className="denied">{request.startDate+", "+request.endDate +": "+request.status}</div></li>
         };
 
     });
@@ -27,7 +27,6 @@ const LeftList: React.FC<LeftListProps> = ({ content }) => {
         <div className="holidayRequestList">
             <div className="holidayRequestListForm">
                 <h1 className="listHeader">Holiday Requests</h1>
-                <pre> </pre>
                 <ul>{listItems}</ul>
             </div>
             
