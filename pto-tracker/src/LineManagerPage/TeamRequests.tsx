@@ -1,17 +1,36 @@
 import React from 'react';
 import './TeamRequests.css';
 
-type holiday = {status:string,start:string,end:string};
+type holiday = {id:string,status:string,start:string,end:string};
 type user_details = {user:string, profile_picture:string, holidays:holiday[]};
 
 interface PTORequestsProps {
     teamMembers : user_details[]
 }
 
+const showElementById = (elementId: string, opacity:string): void => {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.style.opacity = opacity;
+    } else {
+      console.warn(`Element with id ${elementId} not found.`);
+    }
+  };
+
 const PTORequests: React.FC<PTORequestsProps> = ({ teamMembers }) => {
 
+    const startHover = (id:string):void => {
+        showElementById(id, '100%');
+    }
+
+    const endHover = (id:string):void => {
+        showElementById(id, '0%');
+    }
+
+
+
     const requestCard = (request : holiday, team_member : user_details) => {
-        return <div className="request-card">
+        return <div className="request-card" onMouseEnter={() => startHover(request.id)} onMouseLeave={() =>endHover(request.id)}>
             <div style={{display:'flex'}}>
                 <img src={team_member.profile_picture}></img>
                 <h3>{team_member.user}</h3>

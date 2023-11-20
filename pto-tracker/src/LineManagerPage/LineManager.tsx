@@ -22,7 +22,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    type holiday = {status:string,start:string,end:string};
+    type holiday = {id:string, status:string,start:string,end:string};
     type user_details = {user:string,firstName:string, secondName:string, email:string, phoneNumber:string, profile_picture:string, holidays:holiday[]};
 
     const team_members : user_details[] = [
@@ -35,6 +35,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             profile_picture : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgfQVsavMhO0GRho8eTKGOpUyyDgmQx8mA6B6M6ovOcA&s",
             holidays : [
                 {
+                    id : '1',
                     status : "confirmed",
                     start : "2023-11-15",
                     end : "2023-11-25"
@@ -50,11 +51,13 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             profile_picture : "https://pics.craiyon.com/2023-07-15/dc2ec5a571974417a5551420a4fb0587.webp",
             holidays : [
                 {
+                    id : '2',
                     status : "pending",
                     start : "2023-11-01",
                     end : "2023-11-03"
                 },
                 {
+                    id : '3',
                     status : "pending",
                     start : "2023-11-19",
                     end : "2023-12-24"
@@ -101,7 +104,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     }
 
     var user_template = (startDate:number, endDate:number, holiday:holiday) => {
-        return <div className='users-row' onClick={handleUserClick} style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>
+        return <div className='users-row' onClick={handleUserClick} style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status} id={holiday.id.toString()}></div>}></Tooltip></div>
     }
     
 
@@ -145,7 +148,6 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                         if (new Date(holiday.end).getMonth() == currMonth) {
                             const endDate = new Date(holiday.end).getDate();
                             grid_items.push(user_template(startDate, endDate, holiday));
-                            
                         }
                         else {
                             const endDate = lastDateofMonth;
@@ -165,7 +167,6 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             }
         }
         setDaysTag(<div className="calendar-grid">{grid_items}</div>);
-
     }
 
     const getUsername = () => {
