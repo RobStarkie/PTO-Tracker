@@ -1,5 +1,6 @@
 import { useState } from "react";
 import './StandardUserAccountSettings.css'
+import { Padding } from "@mui/icons-material";
 
 interface AccountSettingProps {
     handleLogout:(value: boolean | ((prevVar: boolean) => boolean)) => void;
@@ -21,13 +22,14 @@ const StandardUserAccountSettings: React.FC<AccountSettingProps> = ({ handleLogo
         <body className="SUACBody">
             <form className="SUACForm">
                 <h1 className="SUACH1">Change Password</h1>
-                <h2 className="SUACH2">username: {username}</h2>
-                <label className="SUACPWLabel" htmlFor="password">Password</label>
+                <h2 className="SUACH2">Account Email</h2>
+                <p style={{padding:0, margin:0, color:'black'}}>{username}</p>
+                <label className="SUACPWLabel" htmlFor="password">Old Password</label>
                 <input className="SUACPasswordInput"type="password" placeholder="Password" id="password1" required onChange={e =>{
                     setPassword1(e.target.value);
                     e.preventDefault();
                 }} />
-                <label className="SUACPWLabel" htmlFor="password">Password</label>
+                <label className="SUACPWLabel" htmlFor="password">Re-enter Old Password</label>
                 <input className="SUACPasswordInput" type="password" placeholder="Re-enter Password" id="password2" required onChange={e => {
                     setPassword2(e.target.value);
                     e.preventDefault();

@@ -32,7 +32,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
 
   const handleLoginClick = async () => {
     setLoginPressed(true);
-    await new Promise(r => setTimeout(r, 3000));
+    await new Promise(r => setTimeout(r, 2000));
     checkAdmin();
     handleLogin();
     setLoginPressed(false);
@@ -64,7 +64,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
             {emailSent &&(
               <div style={{textAlign:'start'}}>
               <label htmlFor="username">Email Address</label>
-              <input type="text" placeholder="Email" id="username" required onChange={e =>{
+              <input className="animated-border" type="text" disabled={loginPressed} placeholder="Email" id="username" required onChange={e =>{
                   setUsername(e.target.value);
                   handleUsernameInput(e.target.value);
                   e.preventDefault();
@@ -79,7 +79,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
               {showForgotPassword && (
                 <div style={{textAlign:'start'}}>
                   <label htmlFor="password">Password</label>
-                  <input type="password" placeholder="Password" id="password" required onChange={e => {
+                  <input className="animated-border" disabled={loginPressed} type="password" placeholder="Password" id="password" required onChange={e => {
                       setPassword(e.target.value);
                       e.preventDefault();
                     }}/>
