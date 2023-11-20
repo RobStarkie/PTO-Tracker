@@ -169,7 +169,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     }
 
     const userData = () => {
-        const team_member = team_members[user];
+        const team_member = team_members[user]!;
         var data = "Username: "+team_member.user +"\n Email: "+ team_member.email +"\n Phone Number: "+team_member.phoneNumber;
         return data;
     }
@@ -180,8 +180,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                 <Modal.Header closeButton>
                     <Modal.Title>User Details</Modal.Title>
                 </Modal.Header>
-
-                    $userData();
+                    <a>{userData()}</a>
                     
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
