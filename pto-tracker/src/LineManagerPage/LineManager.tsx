@@ -12,13 +12,18 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     const [currMonth, setCurrMonth] = useState(new Date().getMonth());
     const [daysTag, setDaysTag] = useState<JSX.Element | null>(null);
     const [currentDate, setCurrentDate] = useState<string>('');
+    const [show, setShow] = useState(false);
 
     type holiday = {status:string,start:string,end:string};
-    type user_details = {user:string, profile_picture:string, holidays:holiday[]};
+    type user_details = {user:string,firstName:string, secondName:string, email:string, phoneNumber:string, profile_picture:string, holidays:holiday[]};
 
     const team_members : user_details[] = [
         {
-            user : "Matt Connolly",
+            user : "Matt Connolly", 
+            firstName: "Matt",
+            secondName: "Connolly",
+            email: "temp@email.com",
+            phoneNumber: "12345678910",
             profile_picture : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgfQVsavMhO0GRho8eTKGOpUyyDgmQx8mA6B6M6ovOcA&s",
             holidays : [
                 {
@@ -30,6 +35,10 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         },
         {
             user : "Robert Starkie",
+            firstName: "Robert",
+            secondName: "Starkie",
+            email: "temp@email.com",
+            phoneNumber: "12345678910",
             profile_picture : "https://pics.craiyon.com/2023-07-15/dc2ec5a571974417a5551420a4fb0587.webp",
             holidays : [
                 {
@@ -87,6 +96,26 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         return <div className='users-row' onClick={handleUserClick} style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status}></div>}></Tooltip></div>
     }
 
+    const userInfoPopUp = (username:string, firstName:string, secondName:string, email:string, phoneNumber:string) => {
+        alert(
+            "User: " + username +"\n"+
+            "Email: " + email+"\n"+
+            "Phone Number: " + phoneNumber+"\n"
+        );
+            
+        
+    }
+
+    function openModal() {
+        document.getElementById("myModal")!.style.display = "block";
+    }
+      
+      // Close the Modal
+    function closeModal() {
+        document.getElementById("myModal")!.style.display = "none";
+    }
+      
+
     const renderCalendar = () => {
         const date = new Date();
         const firstDayofMonth = new Date(currYear, currMonth, 1).getDay();
@@ -110,7 +139,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
 
         for (let i = 0; i < team_members.length; i++) {
             const team_member = team_members[i];
-            grid_items.push(<div className="team-member" style={{gridColumnStart:1, gridColumnEnd:3}}><img className="profile-picture" src={team_member.profile_picture}></img>{team_member.user}</div>);
+            grid_items.push(<div className="team-member" onClick={e=>{userInfoPopUp(team_member.user,team_member.firstName, team_member.secondName, team_member.email, team_member.phoneNumber)}} style={{gridColumnStart:1, gridColumnEnd:3}}><img className="profile-picture" src={team_member.profile_picture}></img>{team_member.user}</div>);
             for (let j = 0; j < team_member.holidays.length; j++) {
                 const holiday = team_member.holidays[j];
                 if (new Date(holiday.start).getFullYear() == currYear) {
