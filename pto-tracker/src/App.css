@@ -1,4 +1,10 @@
 .App {
   text-align: center;
-  height:100vh;
+  height:100%;
+  width: 100vw;
+}
+
+#background-icon {
+  opacity: 20%;
+  z-index: -6;
 }

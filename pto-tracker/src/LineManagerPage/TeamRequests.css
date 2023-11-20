@@ -1,0 +1,54 @@
+.PTO-Requests {
+    background-color: rgba(255,255,255,0.13);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+    position: relative;
+    padding: 20px;
+    width: 100%;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-top: 0px;
+    margin-left: 10px;
+    max-width: 500px;
+}
+
+.PTO-Requests ol {
+    list-style: none;
+}
+
+.request-card {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.request-card p {
+    font-size: x-small;
+}
+
+.request-card h3 {
+    font-size: x-large;
+}
+
+.request-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+.request-card button {
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+}
+
+@media screen and (max-width: 1899px) {
+    .PTO-Requests {
+        margin-top: 10px;
+        margin-left: auto;
+    }
+}
