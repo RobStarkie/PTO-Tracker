@@ -12,11 +12,18 @@ const PTORequests: React.FC<PTORequestsProps> = ({ teamMembers }) => {
 
     const requestCard = (request : holiday, team_member : user_details) => {
         return <div className="request-card">
-            <img src={team_member.profile_picture}></img>
-            <h3>{team_member.user}</h3>
-            <p>{request.start} - {request.end}</p>
-            <button><span className="material-symbols-outlined">done</span></button>
-            <button><span className="material-symbols-outlined">close</span></button>
+            <div style={{display:'flex'}}>
+                <img src={team_member.profile_picture}></img>
+                <h3>{team_member.user}</h3>
+            </div>
+            <div style={{margin:'10px'}}>
+                <p><b>Start: </b>{request.start}</p>
+                <p><b>End: </b> {request.end}</p>
+            </div>
+            <div style={{display:'flex'}}>            
+                <button style={{backgroundColor:'green'}}><span className="material-symbols-rounded">done</span></button>
+                <button style={{backgroundColor:'red'}}><span className="material-symbols-rounded">close</span></button>
+            </div>
         </div>
     }
 

@@ -5,7 +5,8 @@
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 15px 40px rgba(0,0,0,0.12);
     position: relative;
-    padding: 20px;
+    padding-top: 10px;
+    padding-right: 10px;
     width: 100%;
     margin-right: auto;
     margin-bottom: auto;
@@ -16,34 +17,67 @@
 
 .PTO-Requests ol {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .request-card {
     display: flex;
     padding: 10px;
     align-items: center;
-    justify-content: center;
+    border-radius: 5px;
+    text-align: center;
+    transition: 0.2s;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+.request-card:hover {
+    background-color: rgb(231, 231, 231);
 }
 
 .request-card p {
     font-size: x-small;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .request-card h3 {
-    font-size: x-large;
+    font-size: large;
 }
 
 .request-card img {
     width: 50px;
+    margin-right: 10px;
     height: 50px;
     border-radius: 100%;
+}
+
+.request-card div {
+    align-items: center;
+    justify-content: center;
 }
 
 .request-card button {
     border-radius: 100%;
     width: 30px;
     height: 30px;
-    margin: 5px;
+    margin: 2px;
+    border: none;
+    transition: 0.1s;
+    color: white;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.request-card button:hover {
+    opacity: 50%;
+}
+
+.request-card button:hover {
+    opacity: 50%;
 }
 
 @media screen and (max-width: 1899px) {
