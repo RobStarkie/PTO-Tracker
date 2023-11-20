@@ -157,7 +157,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             </div>
                 {daysTag}
             </div>
-            <PTORequests></PTORequests>
+            <PTORequests teamMembers={team_members}></PTORequests>
         </div>
     );
 };
