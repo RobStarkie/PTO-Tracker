@@ -17,6 +17,24 @@ const Admin: React.FC<AdminProps> = ({  }) => {
     const [username, setUsername] = useState("");
     const [isFoundAccount, setFoundAccount]= useState(false);
 
+    const users = [{
+        id: 'tempUser',
+        firstName: 'tempFirstName',
+        secondName: 'tempSecondName',
+        email: 'tempEmail',
+        password: 'tempPassword',
+        lineManager: 'tempManager',
+        numberOfHolidays: '25'
+    }, {
+        id: 'someUser',
+        firstName: 'tempFirstName',
+        secondName: 'tempSecondName',
+        email: 'tempEmail',
+        password: 'tempPassword',
+        lineManager: 'tempManager',
+        numberOfHolidays: '25'
+    }];
+
     const handleEditAccount = () => {
         setEditAccount(true);
         setCreateAccount(false);
@@ -36,7 +54,7 @@ const Admin: React.FC<AdminProps> = ({  }) => {
     return (
         <div className = "AdminPage">
             <ul className="adminUserList">
-                <li className="AdminSelectionList"><AdminSelection handleEditAccount={handleEditAccount} handleCreateAccount={handleCreateAccount} handleUsername={handleUsername}></AdminSelection></li>
+                <li className="AdminSelectionList"><AdminSelection handleEditAccount={handleEditAccount} handleCreateAccount={handleCreateAccount} handleUsername={handleUsername} content={users}></AdminSelection></li>
                 {isCreateAccount ? (
                     <li className ="adminCreateUser"> <CreateNewUser ></CreateNewUser></li>
                 ) : (
