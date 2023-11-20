@@ -1,0 +1,30 @@
+
+.adminUserList {
+    display: flex;
+    list-style: none;
+    padding: 30px;
+    margin-top: 70px;
+    align-items: center;
+    flex-wrap: wrap; /* Allow items to wrap onto the next line */
+}
+
+.adminUserList li {
+    padding: 30px;
+}
+
+/* Media Query for Vertical List */
+@media screen and (max-width: 1400px) {
+    .adminUserList {
+        flex-direction: column;
+    }
+    .adminUserList li {
+        padding: 10px;
+        margin-right: 0; /* Remove right margin for vertical layout */
+        margin-bottom: 10px; /* Add spacing between list items in vertical layout */
+    }
+}
+
+
+
+
+

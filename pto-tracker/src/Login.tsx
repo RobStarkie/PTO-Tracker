@@ -7,10 +7,11 @@ import SmallLoadingSpinner from './Components/SmallLoadingSpinner';
 interface LoginScreenProps {
     handleLogin: () => void;
     handleUsername: (value: string | ((prevVar: string) => string)) => void;
+    handleAdmin: () => void;
 }
 
 // Functional component
-const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, handleAdmin }) => {
 
   const [username, setUsername] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
@@ -42,6 +43,12 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername }
 
   const handleUsernameInput = (tempUsername: string) => {
     handleUsername(tempUsername);
+  }
+
+  const checkAdmin = () => {
+    if(username == "admin") {
+      handleAdmin();
+    }
   }
 
   return (
