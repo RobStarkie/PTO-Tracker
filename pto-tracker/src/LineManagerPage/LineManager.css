@@ -143,3 +143,13 @@
         overflow-x: visible;
     }
 }
+
+.modalUserImage {
+    height: 200px;
+    width: 200px;
+}
+
+.modal *{
+    align-items: center;
+}
+

@@ -6,7 +6,7 @@ import PTORequests from './TeamRequests';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import Modal from 'react-bootstrap/Modal';
-import { Button } from "react-bootstrap";
+import { Button, ModalBody } from "react-bootstrap";
 
 interface LineManagerProps {
 }
@@ -168,19 +168,46 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
 
     }
 
-    const userData = () => {
+    const getUsername = () => {
         const team_member = team_members[userListNumber]!;
-        var data = "Username: "+team_member.user +"\n Email: "+ team_member.email +"\n Phone Number: "+team_member.phoneNumber;
-        return data;
+        var usernmme = "Username: "+team_member.user;
+        return usernmme;
+    }
+
+    const getUserEmail = () => {
+        const team_member = team_members[userListNumber]!;
+        let email = "Email: " + team_member.email;
+        return email;
+        
+    }
+    const getUserPhoneNumber = () => {
+        const team_member = team_members[userListNumber]!;
+        let number = "Number: " + team_member.phoneNumber;
+        return number;
+        
+    }
+
+    function userImage() {
+        const team_member = team_members[userListNumber]!;
+        return team_member.profile_picture
     }
 
     return (
         <div className="line-mananger-body">
-            <Modal show={show} onHide={handleClose}>
+            <Modal className="modal" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>User Details</Modal.Title>
                 </Modal.Header>
-                    <a>{userData()}</a>
+                <ModalBody>
+                    <img className="modalUserImage" src = {userImage()}></img>
+                    <br></br>
+                    <a>{getUsername()}</a>
+                    <br></br>
+                    <a>{getUserEmail()}</a>
+                    <br></br>
+                    <a>{getUserPhoneNumber()}</a>
+                </ModalBody>
+                    
                     
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
