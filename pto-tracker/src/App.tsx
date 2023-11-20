@@ -65,11 +65,11 @@ const App: React.FC<AppProps> = () => {
                 </Route>
               </Routes>
             </BrowserRouter>
-        )};
+        )}
         </div>
       ) : (
         <LoginScreen handleLogin={handleLogin} handleUsername={handleUsername} handleAdmin={handleAdmin} />
-      )};
+      )}
     </div>
   );
 };

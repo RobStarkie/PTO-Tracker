@@ -71,10 +71,10 @@ const Layout: React.FC<TopBarProps> = ({ handleLogout, admin }) => {
             </Container>
           </Navbar>
         </div>
-      )};
+      )}
     <Outlet />
     </div>
-  );
-};
+  )
+}
 
 export default Layout;
