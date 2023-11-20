@@ -17,7 +17,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     const [daysTag, setDaysTag] = useState<JSX.Element | null>(null);
     const [currentDate, setCurrentDate] = useState<string>('');
     const [show, setShow] = useState(false);
-    var user: number;
+    const [userListNumber, setUserListNumber] = useState(Number);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -131,7 +131,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             grid_items.push(<div className="team-member" style={{gridColumnStart:1, gridColumnEnd:3}}>
                 <button onClick={e => {
                     handleShow();
-                    user=i;
+                    setUserListNumber(i);
                 }}>
                 <img className="profile-picture" src={team_member.profile_picture}></img>
                     {team_member.user}
@@ -169,7 +169,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     }
 
     const userData = () => {
-        const team_member = team_members[user]!;
+        const team_member = team_members[userListNumber]!;
         var data = "Username: "+team_member.user +"\n Email: "+ team_member.email +"\n Phone Number: "+team_member.phoneNumber;
         return data;
     }
