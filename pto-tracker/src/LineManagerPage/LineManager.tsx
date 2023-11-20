@@ -3,6 +3,10 @@ import './LineManager.css';
 import Tooltip from "@mui/material/Tooltip";
 import { profile } from "console";
 import PTORequests from './TeamRequests';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 interface LineManagerProps {
 }
@@ -12,13 +16,22 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     const [currMonth, setCurrMonth] = useState(new Date().getMonth());
     const [daysTag, setDaysTag] = useState<JSX.Element | null>(null);
     const [currentDate, setCurrentDate] = useState<string>('');
+    const [show, setShow] = useState(false);
+    const [userListNumber, setUserListNumber] = useState(Number);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     type holiday = {id:string, status:string,start:string,end:string};
-    type user_details = {user:string, profile_picture:string, holidays:holiday[]};
+    type user_details = {user:string,firstName:string, secondName:string, email:string, phoneNumber:string, profile_picture:string, holidays:holiday[]};
 
     const team_members : user_details[] = [
         {
-            user : "Matt Connolly",
+            user : "Matt Connolly", 
+            firstName: "Matt",
+            secondName: "Connolly",
+            email: "temp@email.com",
+            phoneNumber: "12345678910",
             profile_picture : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgfQVsavMhO0GRho8eTKGOpUyyDgmQx8mA6B6M6ovOcA&s",
             holidays : [
                 {
@@ -31,6 +44,10 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         },
         {
             user : "Robert Starkie",
+            firstName: "Robert",
+            secondName: "Starkie",
+            email: "temp@email.com",
+            phoneNumber: "12345678910",
             profile_picture : "https://pics.craiyon.com/2023-07-15/dc2ec5a571974417a5551420a4fb0587.webp",
             holidays : [
                 {
@@ -89,6 +106,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     var user_template = (startDate:number, endDate:number, holiday:holiday) => {
         return <div className='users-row' onClick={handleUserClick} style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status} id={holiday.id.toString()}></div>}></Tooltip></div>
     }
+    
 
     const renderCalendar = () => {
         const date = new Date();
@@ -113,7 +131,15 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
 
         for (let i = 0; i < team_members.length; i++) {
             const team_member = team_members[i];
-            grid_items.push(<div className="team-member" style={{gridColumnStart:1, gridColumnEnd:3}}><img className="profile-picture" src={team_member.profile_picture}></img>{team_member.user}</div>);
+            grid_items.push(
+                <div className="team-member" onClick={e => {
+                                                        handleShow();
+                                                        setUserListNumber(i);
+                                            }} 
+                    style={{gridColumnStart:1, gridColumnEnd:3}}>
+                    <img className="profile-picture" src={team_member.profile_picture}></img>
+                    {team_member.user}
+                </div>);
             for (let j = 0; j < team_member.holidays.length; j++) {
                 const holiday = team_member.holidays[j];
                 if (new Date(holiday.start).getFullYear() == currYear) {
@@ -143,8 +169,31 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         setDaysTag(<div className="calendar-grid">{grid_items}</div>);
     }
 
+    const userData = () => {
+        const team_member = team_members[userListNumber]!;
+        var data = <div style={{textAlign:'center', marginTop:'20px'}}>
+            <img style={{borderRadius:'100%', width:'100px', padding:'10px'}} src={team_member.profile_picture}></img>
+            <p>Username: <b>{team_member.user}</b></p>
+            <p>Email: <b>{team_member.email}</b></p>
+            <p>Phone Number: <b>{team_member.phoneNumber}</b></p>
+        </div>;
+        return data;
+    }
+
     return (
         <div className="line-mananger-body">
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>User Details</Modal.Title>
+                </Modal.Header>
+                    <a>{userData()}</a>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            
             <div className="calendar-box">
                 <div className="icons">
                 <span id="prev" className="material-symbols-rounded" onClick={() => handleIconClick("prev")}>
@@ -163,3 +212,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
 };
 
 export default LineManagerPage;
+
+function CGRect(x: any, arg1: number, y: any, arg3: number, width: any, arg5: number, height: any, arg7: number): any {
+    throw new Error("Function not implemented.");
+}

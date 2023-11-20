@@ -32,7 +32,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
 
   const handleLoginClick = async () => {
     setLoginPressed(true);
-    await new Promise(r => setTimeout(r, 2000));
+    await new Promise(r => setTimeout(r, 1000));
     checkAdmin();
     handleLogin();
     setLoginPressed(false);
