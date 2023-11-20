@@ -13,7 +13,7 @@ interface AdminProps {
 const Admin: React.FC<AdminProps> = ({  }) => {
 
     const [isEditAccount, setEditAccount]= useState(false);
-    const [isCreateAccount, setCreateAccount]= useState(false);
+    const [isCreateAccount, setCreateAccount]= useState(true);
     const [username, setUsername] = useState("");
     const [isFoundAccount, setFoundAccount]= useState(false);
 
@@ -38,10 +38,9 @@ const Admin: React.FC<AdminProps> = ({  }) => {
             <ul className="adminUserList">
                 <li className="AdminSelectionList"><AdminSelection handleEditAccount={handleEditAccount} handleCreateAccount={handleCreateAccount} handleUsername={handleUsername}></AdminSelection></li>
                 {isCreateAccount ? (
-                    <li className ="adminEditUser"> <EditUser username={username}></EditUser></li>
-                ) : (
                     <li className ="adminCreateUser"> <CreateNewUser ></CreateNewUser></li>
-                    
+                ) : (
+                    <li className ="adminEditUser"> <EditUser username={username}></EditUser></li>
                 )};
             </ul> 
             <img src={shapes} className="background-shapes"></img>                       
