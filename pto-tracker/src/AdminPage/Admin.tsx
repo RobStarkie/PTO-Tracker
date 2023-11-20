@@ -59,7 +59,7 @@ const Admin: React.FC<AdminProps> = ({  }) => {
                     <li className ="adminCreateUser"> <CreateNewUser ></CreateNewUser></li>
                 ) : (
                     <li className ="adminEditUser"> <EditUser username={username}></EditUser></li>
-                )};
+                )}
             </ul>               
         </div>
     );
