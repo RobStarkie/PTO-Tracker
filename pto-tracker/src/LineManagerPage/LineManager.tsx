@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import './LineManager.css';
 import Tooltip from "@mui/material/Tooltip";
 import { profile } from "console";
-import PTORequests from './TeamRequests'
-
+import PTORequests from './TeamRequests';
 
 interface LineManagerProps {
 }

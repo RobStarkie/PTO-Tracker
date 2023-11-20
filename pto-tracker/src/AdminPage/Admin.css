@@ -3,9 +3,11 @@
     display: flex;
     list-style: none;
     padding: 30px;
-    margin-top: 70px;
+    transition: 0.5s;
     align-items: center;
-    flex-wrap: wrap; /* Allow items to wrap onto the next line */
+    justify-content: center;
+    margin: auto;
+    margin-top: 150px;
 }
 
 .adminUserList li {

@@ -60,8 +60,7 @@ const Admin: React.FC<AdminProps> = ({  }) => {
                 ) : (
                     <li className ="adminEditUser"> <EditUser username={username}></EditUser></li>
                 )};
-            </ul> 
-            <img src={shapes} className="background-shapes"></img>                       
+            </ul>               
         </div>
     );
 };
