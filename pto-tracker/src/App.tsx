@@ -48,8 +48,6 @@ const App: React.FC<AppProps> = () => {
                 <Route path="/" element={<Layout handleLogout={handleLogout} admin={isAdmin}/>}>
                   <Route index element={<Admin handleLogout={handleLogout} />}/>
                   <Route path="account" element={<AccountSettingsFramework handleLogout={handleLogout} username={username} />} />
-                  <Route path="createAccount" element={<CreateNewUser/>} />
-                  <Route path="EditUserAccount" element={<EditUser username={username}/>}/>
                 </Route>
               </Routes>
             </BrowserRouter>

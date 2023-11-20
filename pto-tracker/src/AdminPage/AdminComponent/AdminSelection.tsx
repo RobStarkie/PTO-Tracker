@@ -1,6 +1,8 @@
 import { useState } from "react";
 import './AdminSelection.css';
 import { create } from "domain";
+import { Modal } from "react-bootstrap";
+import { Button, ModalBody } from "react-bootstrap";
 
 interface AdminSelectionProps {
     handleCreateAccount: () => void;
@@ -13,6 +15,10 @@ const AdminSelction: React.FC<AdminSelectionProps> = ({ handleCreateAccount, han
     const [editRadioButton, setEditRadioButton] = useState(false);
     const [createNewUser, setCreateNewUser] = useState(true);
     const [username, setUsername] = useState("");
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     
     const handleEditRadioButton = () => {
         setEditRadioButton(true);
@@ -49,17 +55,29 @@ const AdminSelction: React.FC<AdminSelectionProps> = ({ handleCreateAccount, han
     }
 
     const searchUser = () => {
-
-        if (content.filter(request => request.id === (username))) {
+        if (username=="temp") {
             handleUsername(username);
         } else {
-            alert("ALERT!\nUSER '"+username+"' DOES NOT EXIST");
+            handleShow();
             handleUsername("");
         }
     }
 
     return (
-        <div className="AdminSelection">         
+        <div className="AdminSelection"> 
+        <Modal className="modal" show={show} onHide={handleClose}>
+                <Modal.Header className="modalHeader" closeButton>
+                    <Modal.Title>Search Result</Modal.Title>
+                </Modal.Header>
+                <ModalBody>
+                    <a>User "{username}" does not exist</a>
+                </ModalBody> 
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>       
             <h1>Please select an option</h1>
             <label htmlFor="CreateUser">Create a New Account</label><br></br>
             <input defaultChecked type="radio" id="CreateUserBtn" name="optionSelection" value="CreateUser" onClick={ e => {

@@ -207,9 +207,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                     <a>{getUserEmail()}</a>
                     <br></br>
                     <a>{getUserPhoneNumber()}</a>
-                </ModalBody>
-                    
-                    
+                </ModalBody> 
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close

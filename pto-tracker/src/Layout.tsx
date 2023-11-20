@@ -36,7 +36,7 @@ const Layout: React.FC<TopBarProps> = ({ handleLogout, admin }) => {
                 </Nav>
                 <Nav>
                   <Nav.Link as={Link} to="/account">Account Settings</Nav.Link>
-                  <Nav.Link onClick={handleLogoutClick}>
+                  <Nav.Link onClick={handleLogoutClick} href="/">
                     <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
                     <div style={{color:'red', display: 'inline-block',}}>Sign Out</div>
                       <span className="material-symbols-outlined" style={{ display: 'inline-block', color:'red'}}>logout</span>
@@ -60,7 +60,7 @@ const Layout: React.FC<TopBarProps> = ({ handleLogout, admin }) => {
                 <Nav style={{marginTop:'12px'}}>
                 <Nav.Link as={Link} to="/team-view"><p>Team Overview</p></Nav.Link>
                     <Nav.Link as={Link} to="/account" style={{marginTop:'-2px'}}>Logged In: <b>Matt Connolly</b> <img style={{borderRadius:'100%', width:'30px', alignItems:'center'}} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRudDbHeW2OobhX8E9fAY-ctpUAHeTNWfaqJA&s"></img></Nav.Link>
-                    <Nav.Link onClick={handleLogoutClick}>
+                    <Nav.Link onClick={handleLogoutClick} href="/">
                       <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
                       <div style={{color:'red', display: 'inline-block',}}></div>
                         <span className="material-symbols-outlined" style={{ display: 'inline-block', color:'red'}}>logout</span>
