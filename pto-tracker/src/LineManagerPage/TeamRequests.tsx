@@ -20,7 +20,7 @@ const showElementById = (elementId: string, opacity:string): void => {
 const PTORequests: React.FC<PTORequestsProps> = ({ teamMembers }) => {
 
     const startHover = (id:string):void => {
-        showElementById(id, '100%');
+        showElementById(id, '60%');
     }
 
     const endHover = (id:string):void => {

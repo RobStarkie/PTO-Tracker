@@ -34,14 +34,14 @@ export const RightAddRequest: React.FC<RightAddRequestProps> = ({ content }) => 
             <div className="rightComponentForm">
                 <h1 className="rightComponentHeader">Enter a New Request</h1>
                 <label htmlFor="startDate">Start Date</label>
-                <input type="text" placeholder="dd/mm/yyyy" id="startDate" required onChange={e => {
+                <input type="date" placeholder="dd/mm/yyyy" id="startDate" required onChange={e => {
                     setStartDate(e.target.value);
                     e.preventDefault();
                 }} />
 
 
                 <label htmlFor="endDate">End Date</label>
-                <input type="text" placeholder="dd/mm/yyyy" id="endDate" required onChange={e => {
+                <input type="date" placeholder="dd/mm/yyyy" id="endDate" required onChange={e => {
                     setEndDate(e.target.value);
                     e.preventDefault();
                 }} />
