@@ -18,6 +18,7 @@ const App: React.FC<AppProps> = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [isAdmin, setAdmin] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
 
   // Function to handle login
   const handleLogin = () => {
@@ -66,7 +67,7 @@ const App: React.FC<AppProps> = () => {
         )}
         </div>
       ) : (
-        <LoginScreen handleLogin={handleLogin} handleUsername={handleUsername} handleAdmin={handleAdmin} />
+        <LoginScreen handleLogin={handleLogin} handleUsername={handleUsername} handleAdmin={handleAdmin} setToken={setToken}/>
       )}
     </div>
   );

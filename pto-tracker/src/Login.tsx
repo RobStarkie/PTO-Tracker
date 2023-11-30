@@ -9,10 +9,11 @@ interface LoginScreenProps {
     handleLogin: () => void;
     handleUsername: (value: string | ((prevVar: string) => string)) => void;
     handleAdmin: () => void;
+    setToken: (value: string) => void;
 }
 
 // Functional component
-const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, handleAdmin }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, handleAdmin, setToken }) => {
 
   const [username, setUsername] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
@@ -39,15 +40,16 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
     }
     axios.post('http://localhost:5000/token', postData)
     .then(response => {
-      console.log('Response:', response.data);
+      console.log('Response:', response.data["access_token"]);
+      setToken(response.data["access_token"]);
       checkAdmin();
       handleLogin();
       setLoginPressed(false);
     })
     .catch(error => {
       console.error('Error:', error);
+      setLoginPressed(false);
     });
-    setLoginPressed(false);
   };
 
   const sendPasswordReset = () => {
