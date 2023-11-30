@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Login.css';
 import logo from './logo.png'
 import SmallLoadingSpinner from './Components/SmallLoadingSpinner';
+import axios from 'axios';
 
 // Define the props interface if needed
 interface LoginScreenProps {
@@ -32,9 +33,20 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
 
   const handleLoginClick = async () => {
     setLoginPressed(true);
-    await new Promise(r => setTimeout(r, 1000));
-    checkAdmin();
-    handleLogin();
+    const postData = {
+      "email" : username,
+      "password" : password
+    }
+    axios.post('http://localhost:5000/token', postData)
+    .then(response => {
+      console.log('Response:', response.data);
+      checkAdmin();
+      handleLogin();
+      setLoginPressed(false);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
     setLoginPressed(false);
   };
 
