@@ -25,6 +25,11 @@ const App: React.FC<AppProps> = () => {
     setIsLoggedIn(true);
   };
 
+  const getToken = () => {
+    console.log("getting token "+token);
+    return token;
+  }
+
   // Function to handle logout
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -62,7 +67,7 @@ const App: React.FC<AppProps> = () => {
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Layout handleLogout={handleLogout} username={username} admin={isAdmin} />}>
-                  <Route index element={<Home handleLogout={handleLogout} token={token} />}/>
+                  <Route index element={<Home handleLogout={handleLogout} getToken={getToken} />}/>
                   <Route path="account" element={<AccountSettingsFramework handleLogout={handleLogout} username={username} />} />
                   <Route path="team-view" element={<LineManagerPage/>} />
                 </Route>

@@ -11,12 +11,12 @@ import { data } from "jquery";
 
 interface HomeProps {
     handleLogout: () => void;
-    token: string;
+    getToken: () => string;
 }
 
 
 
-const Home: React.FC<HomeProps> = ({ handleLogout}, token) => {
+const Home: React.FC<HomeProps> = ({handleLogout, getToken}) => {
 
     useEffect(() => {
         let ignore = false;
@@ -24,11 +24,13 @@ const Home: React.FC<HomeProps> = ({ handleLogout}, token) => {
         if (!ignore)  getHolidayRequets()
         return () => { ignore = true; }
         },[]);
+
+    const token : string = getToken();
     
     const getHolidayRequets = () => {
         console.log("getting holidays from db")
         console.log("token: " + token)
-        axios.get('http://localhost:5000/getHolidays', { headers: { Authorization: `Bearer ${token}` }})
+        axios.get('http://localhost:5000/make-holiday-request', { headers: { Authorization: `Bearer ${token}` }})
         .then(response => {
             console.log("response: "+(response.data))
             //holidayRequests.push())   
