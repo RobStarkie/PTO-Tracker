@@ -4,6 +4,8 @@ import logo from './logo.png'
 import SmallLoadingSpinner from './Components/SmallLoadingSpinner';
 import axios from 'axios';
 
+
+
 // Define the props interface if needed
 interface LoginScreenProps {
     handleLogin: () => void;
@@ -38,6 +40,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
       "email" : username,
       "password" : password
     }
+
     axios.post('http://localhost:5000/token', postData)
     .then(response => {
       console.log('Response:', response.data["access_token"]);
