@@ -18,7 +18,7 @@ const App: React.FC<AppProps> = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [isAdmin, setAdmin] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState("");
 
   // Function to handle login
   const handleLogin = () => {
@@ -35,6 +35,10 @@ const App: React.FC<AppProps> = () => {
     setUsername(tempUsername);
   }
 
+  const handleToken = (tempToken: React.SetStateAction<string> ) => {
+    console.log("token: "+tempToken);
+    setToken(tempToken);
+  }
   const handleAdmin = () => {
     setAdmin(true);
   };
@@ -46,7 +50,7 @@ const App: React.FC<AppProps> = () => {
           {isAdmin ? ( 
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Layout handleLogout={handleLogout} admin={isAdmin}/>}>
+                <Route path="/" element={<Layout handleLogout={handleLogout} username={username} admin={isAdmin}/>}>
                   <Route index element={<Admin handleLogout={handleLogout} />}/>
                   <Route path="account" element={<AccountSettingsFramework handleLogout={handleLogout} username={username} />} />
                   <Route path="createAccount" element={<CreateNewUser/>} />
@@ -57,8 +61,8 @@ const App: React.FC<AppProps> = () => {
           ) : (
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Layout handleLogout={handleLogout} admin={isAdmin} />}>
-                  <Route index element={<Home handleLogout={handleLogout} />}/>
+                <Route path="/" element={<Layout handleLogout={handleLogout} username={username} admin={isAdmin} />}>
+                  <Route index element={<Home handleLogout={handleLogout} token={token} />}/>
                   <Route path="account" element={<AccountSettingsFramework handleLogout={handleLogout} username={username} />} />
                   <Route path="team-view" element={<LineManagerPage/>} />
                 </Route>
@@ -67,7 +71,7 @@ const App: React.FC<AppProps> = () => {
         )}
         </div>
       ) : (
-        <LoginScreen handleLogin={handleLogin} handleUsername={handleUsername} handleAdmin={handleAdmin} setToken={setToken}/>
+        <LoginScreen handleLogin={handleLogin} handleUsername={handleUsername} handleAdmin={handleAdmin} handleToken={handleToken}/>
       )}
     </div>
   );

@@ -9,11 +9,11 @@ interface LoginScreenProps {
     handleLogin: () => void;
     handleUsername: (value: string | ((prevVar: string) => string)) => void;
     handleAdmin: () => void;
-    setToken: (value: string) => void;
+    handleToken: (value: string | ((prevVar: string) => string)) => void;
 }
 
 // Functional component
-const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, handleAdmin, setToken }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, handleAdmin, handleToken }) => {
 
   const [username, setUsername] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
@@ -41,7 +41,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
     axios.post('http://localhost:5000/token', postData)
     .then(response => {
       console.log('Response:', response.data["access_token"]);
-      setToken(response.data["access_token"]);
+      handleGeneratedToken(response.data["access_token"]);
       checkAdmin();
       handleLogin();
       setLoginPressed(false);
@@ -55,6 +55,11 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
   const sendPasswordReset = () => {
     setEmailSentClick();
   };
+
+  const handleGeneratedToken = (tempToken: string) => {
+    console.log("tempToken:"+tempToken);
+    handleToken(tempToken);
+  }
 
   const handleUsernameInput = (tempUsername: string) => {
     handleUsername(tempUsername);
