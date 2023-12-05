@@ -113,26 +113,38 @@ header .current-date{
   background: #f2f2f2;
 }
 
-.days li.pending{
+.days li.REVIEW{
     color: #fff;
   }
   
-.days li.pending::before{
+.days li.REVIEW::before{
   background: #535353;
 }
 
-.days li:not(.pending):hover::before{
+.days li:not(.REVIEW):hover::before{
   background: #f2f2f2;
 }
 
-.days li.confirmed{
+.days li.APPROVED{
     color: #fff;
   }
   
-.days li.confirmed::before{
+.days li.APPROVED::before{
   background: #1cdb45;
 }
 
-.days li:not(.confirmed):hover::before{
+.days li:not(.APPROVED):hover::before{
   background: #f2f2f2;
+}
+
+.days li.DENIED{
+  color: #fff;
+}
+
+.days li.DENIED::before{
+background: red;
+}
+
+.days li:not(.DENIED):hover::before{
+background: #f2f2f2;
 }
