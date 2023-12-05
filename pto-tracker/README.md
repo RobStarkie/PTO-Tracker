@@ -2,6 +2,18 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Cloning the Repository
+1. Open your terminal.
+2. Navigate to the directory where you want to clone the repository.
+3. Clone the repository
+   ```sh
+   git clone https://github.com/RobStarkie/PTO-Tracker.git
+   ```
+4. Navigate into the cloned repository: 
+    ```sh
+    cd PTO-Tracker
+    ```
+
 ## Available Scripts
 
 In the project directory, you can run:
