@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import LoginScreen from './Login'
 import Home from'./HomeScreenFramework/Home';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useHref } from "react-router-dom";
 import LineManagerPage from './LineManagerPage/LineManager';
 import Layout from './Layout';
 import AccountSettingsFramework from './AccountSettings/AccountSettingsFramework';
@@ -26,7 +26,6 @@ const App: React.FC<AppProps> = () => {
   };
 
   const getToken = () => {
-    console.log("getting token "+token);
     return token;
   }
 
@@ -41,7 +40,6 @@ const App: React.FC<AppProps> = () => {
   }
 
   const handleToken = (tempToken: React.SetStateAction<string> ) => {
-    console.log("token: "+tempToken);
     setToken(tempToken);
   }
   const handleAdmin = () => {
