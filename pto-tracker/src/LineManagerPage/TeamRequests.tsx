@@ -32,7 +32,7 @@ const PTORequests: React.FC<PTORequestsProps> = ({ teamMembers }) => {
     const requestCard = (request : holiday, team_member : user_details) => {
         return <div className="request-card" onMouseEnter={() => startHover(request.id)} onMouseLeave={() =>endHover(request.id)}>
             <div style={{display:'flex'}}>
-                <img src={team_member.profile_picture}></img>
+                <img src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgfQVsavMhO0GRho8eTKGOpUyyDgmQx8mA6B6M6ovOcA&s"}></img>
                 <h3>{team_member.user}</h3>
             </div>
             <div style={{margin:'10px'}}>
@@ -49,28 +49,28 @@ const PTORequests: React.FC<PTORequestsProps> = ({ teamMembers }) => {
 
 
     const listItems = () => {
-        let listItems = [];
+        let requestElements: JSX.Element[] = [];
         for (let i = 0; i < teamMembers.length; i++) {
-            listItems.push(teamMembers[i].holidays.map(request => {
-                if (request.status == "pending") {
-                    return <li>{requestCard(request, teamMembers[i])}</li>
+            teamMembers[i].holidays.forEach(request => {
+                if (request.status === "pending") {
+                    requestElements.push(
+                        <li key={request.id}>{requestCard(request, teamMembers[i])}</li>
+                    );
                 }
-            }));
+            });
         }
-        return listItems;
-    }
-
-
-
-
+        
+        if (requestElements.length === 0) {
+            return <li><h5>There are currently no pending requests!</h5></li>;
+        }
+    
+        return requestElements;
+    };
+    
     return (
         <div className="PTO-Requests">
-            <h3>
-                Pending Requests
-            </h3>
-            <ol>
-                {listItems()}
-            </ol>
+            <h3>Pending Requests</h3>
+            <ol>{listItems()}</ol>
         </div>
     );
 };
