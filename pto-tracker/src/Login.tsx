@@ -40,18 +40,23 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
       "email" : username,
       "password" : password
     }
+ 
 
     axios.post('http://localhost:5000/token', postData)
     .then(response => {
       handleGeneratedToken(response.data["access_token"]);
-      checkAdmin();
       handleLogin();
+      console.log("admin response :" +response.data["admin"])
+      if (response.data["admin"]==true) {
+        handleAdmin();
+      }
+      
       setLoginPressed(false);
     })
     .catch(error => {
       console.error('Error:', error);
       setLoginPressed(false);
-    });
+    });    
   };
 
   const sendPasswordReset = () => {
@@ -66,11 +71,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
     handleUsername(tempUsername);
   }
 
-  const checkAdmin = () => {
-    if(username == "admin") {
-      handleAdmin();
-    }
-  }
+
 
   return (
     <body>

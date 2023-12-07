@@ -1,19 +1,20 @@
 import { useState } from "react";
 import './AdminSelection.css';
 import { create } from "domain";
+import axios from 'axios';
 
 interface AdminSelectionProps {
     handleCreateAccount: () => void;
     handleEditAccount: () => void;
-    handleUsername: (value: string | ((prevVar: string) => string)) => void;
-    content: { id: string; firstName: string; secondName: string; email: string; password: string; lineManager: string; numberOfHolidays: string}[];
+    handleUser: (user: {userID: string, TeamID: string, Email: string, FirstName: string, SecondName: string, password: string, ProfilePicture:string, phoneNumber:string, LineManager: boolean, LineManagerID: string, TotalHolidays: string, Admin: boolean}) => void;
+    getToken: () => string;
 }
 
-const AdminSelction: React.FC<AdminSelectionProps> = ({ handleCreateAccount, handleEditAccount, handleUsername, content}) => {
+const AdminSelction: React.FC<AdminSelectionProps> = ({ handleCreateAccount, handleEditAccount, handleUser, getToken}) => {
     const [editRadioButton, setEditRadioButton] = useState(false);
     const [createNewUser, setCreateNewUser] = useState(true);
     const [username, setUsername] = useState("");
-    
+    const token : string = getToken();
     const handleEditRadioButton = () => {
         setEditRadioButton(true);
         setCreateNewUser(false);
@@ -49,13 +50,30 @@ const AdminSelction: React.FC<AdminSelectionProps> = ({ handleCreateAccount, han
     }
 
     const searchUser = () => {
-
-        if (content.filter(request => request.id === (username))) {
-            handleUsername(username);
-        } else {
-            alert("ALERT!\nUSER '"+username+"' DOES NOT EXIST");
-            handleUsername("");
+        const postData = {
+            'userID': username
         }
+        axios.post('http://localhost:5000/getUser',postData,{headers: { Authorization: `Bearer ${token}` }})
+        .then(response => {
+            const user = {
+                userID: response.data['UserID'], 
+                TeamID: response.data['TeamID'], 
+                Email: response.data['Email'], 
+                FirstName: response.data['FirstName'],
+                SecondName: response.data['SecondName'], 
+                password: response.data['password'], 
+                ProfilePicture:response.data['ProfilePicture'], 
+                phoneNumber:response.data['phoneNumber'], 
+                LineManager: response.data['LineManager'], 
+                LineManagerID: response.data['LineManagerID'], 
+                TotalHolidays: response.data['TotalHolidays'], 
+                Admin: response.data['Admin']
+            } 
+            handleUser(user)
+        })
+        .catch(TypeError => {
+            console.error('Error:', TypeError);
+        });
     }
 
     return (

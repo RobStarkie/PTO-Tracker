@@ -10,6 +10,7 @@ import Admin from './AdminPage/Admin'
 import CreateNewUser from './AdminPage/AdminComponent/CreateNewUser';
 import EditUser from './AdminPage/AdminComponent/EditUser';
 
+
 interface AppProps {
   // You can define any props here
 }
@@ -19,6 +20,7 @@ const App: React.FC<AppProps> = () => {
   const [username, setUsername] = useState("");
   const [isAdmin, setAdmin] = useState(false);
   const [token, setToken] = useState("");
+  const [user, setUser] = useState({userID: "", TeamID: "", Email: "", FirstName: "", SecondName: "", password: "", ProfilePicture:"", phoneNumber:"", LineManager: false, LineManagerID: "", TotalHolidays: "", Admin: false});
 
   // Function to handle login
   const handleLogin = () => {
@@ -42,9 +44,10 @@ const App: React.FC<AppProps> = () => {
   const handleToken = (tempToken: React.SetStateAction<string> ) => {
     setToken(tempToken);
   }
-  const handleAdmin = () => {
-    setAdmin(true);
-  };
+
+  const handleAdmin = async () => {
+    setAdmin(true)
+  }
 
   return (
     <div className="App">
@@ -53,20 +56,20 @@ const App: React.FC<AppProps> = () => {
           {isAdmin ? ( 
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Layout handleLogout={handleLogout} username={username} admin={isAdmin}/>}>
-                  <Route index element={<Admin handleLogout={handleLogout} />}/>
-                  <Route path="account" element={<AccountSettingsFramework handleLogout={handleLogout} username={username} />} />
-                  <Route path="createAccount" element={<CreateNewUser/>} />
-                  <Route path="EditUserAccount" element={<EditUser username={username}/>}/>
+                <Route path="/" element={<Layout handleLogout={handleLogout} username={username} admin={isAdmin} />}>
+                  <Route index element={<Admin handleLogout={handleLogout} getToken={getToken}/>}/>
+                  <Route path="account" element={<AccountSettingsFramework handleLogout={handleLogout} username={username} getToken={getToken}/>} />
+                  <Route path="createAccount" element={<CreateNewUser getToken={getToken}/>} />
+                  <Route path="EditUserAccount" element={<EditUser user={user} getToken={getToken}/>}/>
                 </Route>
               </Routes>
             </BrowserRouter>
           ) : (
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Layout handleLogout={handleLogout} username={username} admin={isAdmin} />}>
+                <Route path="/" element={<Layout handleLogout={handleLogout} username={username} admin={isAdmin}/>}>
                   <Route index element={<Home handleLogout={handleLogout} getToken={getToken} />}/>
-                  <Route path="account" element={<AccountSettingsFramework handleLogout={handleLogout} username={username} />} />
+                  <Route path="account" element={<AccountSettingsFramework handleLogout={handleLogout} username={username} getToken={getToken} />} />
                   <Route path="team-view" element={<LineManagerPage/>} />
                 </Route>
               </Routes>
