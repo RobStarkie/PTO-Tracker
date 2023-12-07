@@ -5,13 +5,15 @@ import StandardUserAccountSettings from "./AccountSettingsComponents/StandardUse
 interface AccountSettingProps {
     handleLogout:(value: boolean | ((prevVar: boolean) => boolean)) => void;
     username:string;
+    getToken: () => string;
 }
 
 
-const AccountSettingsFramework: React.FC<AccountSettingProps> = ({ handleLogout,  username}) => {
+const AccountSettingsFramework: React.FC<AccountSettingProps> = ({ handleLogout,  username, getToken}) => {
+    const token : string = getToken();
     return (
         <div className="AccountSettings"> 
-            <StandardUserAccountSettings handleLogout={handleLogout} username={username} ></StandardUserAccountSettings>
+            <StandardUserAccountSettings handleLogout={handleLogout} username={username} getToken={getToken}></StandardUserAccountSettings>
         </div>
     );
 };

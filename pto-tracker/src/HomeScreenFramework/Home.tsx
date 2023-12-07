@@ -17,7 +17,7 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({handleLogout, getToken}) => {
     const token : string = getToken();
     const [data, setData] = useState([{ id: "", startDate: "", endDate: "", status: "" }])
-        
+    
     useLayoutEffect(() => {
         axios.get('http://localhost:5000/getHolidays', { headers: { Authorization: `Bearer ${token}` }})
         .then(response => {
