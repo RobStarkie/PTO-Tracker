@@ -110,6 +110,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         })
         .then(response => {
             const transformedData = transformData(response.data);
+            console.log(transformData);
             setTeamMembers(transformedData);
         })
         .catch(error => {
@@ -136,7 +137,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             profile_picture: member.profile_picture,
             holidays: member.holidays.map(holiday => ({
                 id: holiday.id,
-                status: holiday.status.replace('Status.', '').toLowerCase(), // Assuming you want to format the status
+                status: holiday.status.replace('Status.', '').toLowerCase(),
                 start: holiday.start,
                 end: holiday.end
             }))
@@ -203,7 +204,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         }
 
         for (let i = 0; i < teamMembers.length; i++) {
-            const team_member =  team_members_test[i]; //teamMembers[i]; data that does work....
+            const team_member =  teamMembers[i];//team_members_test[i];  data that does work....
             console.log("Team Member: ", team_member);
             grid_items.push(
                 <div className="team-member" onClick={e => {
