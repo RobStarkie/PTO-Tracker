@@ -11,11 +11,11 @@ interface LoginScreenProps {
     handleLogin: () => void;
     handleUsername: (value: string | ((prevVar: string) => string)) => void;
     handleAdmin: () => void;
-    setToken: (value: string) => void;
+    handleToken: (value: string | ((prevVar: string) => string)) => void;
 }
 
 // Functional component
-const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, handleAdmin, setToken }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, handleAdmin, handleToken }) => {
 
   const [username, setUsername] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
@@ -40,34 +40,41 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
       "email" : username,
       "password" : password
     }
+ 
 
     axios.post('http://localhost:5000/token', postData)
     .then(response => {
       localStorage.setItem('token', response.data["access_token"]);
       setToken(response.data["access_token"]);
       checkAdmin();
+      handleGeneratedToken(response.data["access_token"]);
       handleLogin();
+      console.log("admin response :" +response.data["admin"])
+      if (response.data["admin"]==true) {
+        handleAdmin();
+      }
+      
       setLoginPressed(false);
     })
     .catch(error => {
       console.error('Error:', error);
       setLoginPressed(false);
-    });
+    });    
   };
 
   const sendPasswordReset = () => {
     setEmailSentClick();
   };
 
+  const handleGeneratedToken = (tempToken: string) => {
+    handleToken(tempToken);
+  }
+
   const handleUsernameInput = (tempUsername: string) => {
     handleUsername(tempUsername);
   }
 
-  const checkAdmin = () => {
-    if(username == "admin") {
-      handleAdmin();
-    }
-  }
+
 
   return (
     <body>

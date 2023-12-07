@@ -1,36 +1,40 @@
 import React, { useState } from "react";
 import "./RightAddRequest.css"
 import LoadingSpinner from "../../Components/LoadingSpinner";
+import axios from "axios";
+import Home from "../Home";
 
 
 interface RightAddRequestProps {
     content : string
+    getToken: () => string;
 }
 
-export const RightAddRequest: React.FC<RightAddRequestProps> = ({ content }) => {
+export const RightAddRequest: React.FC<RightAddRequestProps> = ({ content, getToken }) => {
     const [startDate, setStartDate] = useState<string | null>(null);
     const [endDate, setEndDate] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const token : string = getToken();
 
     const handleNewHolidayRequest = () => {
-        setIsLoading(true);
-        // Simulate loading, you can replace this with your actual loading logic
-        const loadingTimeout = setTimeout(() => {
-            setIsLoading(false);
-        }, 1000); // Set a timeout to simulate loading for 3 seconds
-
-
-        // Clear the timeout on component unmount to avoid memory leaks
-        return () => clearTimeout(loadingTimeout);
-
-
+        console.log(token)
+        const postData = {
+            "startDate" : startDate,
+            "endDate" : endDate
+          }
+        axios.post('http://localhost:5000/addNewHolidayRequest',postData,{headers: { Authorization: `Bearer ${token}` }})
+        .then(response => {
+            console.log(response.data)
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
         //submit new holiday request
         //submitNewRequest(startDate, endDate);
     };
 
     return (
         <div className="rightComponentContainer">
-            <LoadingSpinner isLoading={isLoading}></LoadingSpinner>
             <div className="rightComponentForm">
                 <h1 className="rightComponentHeader">Enter a New Request</h1>
                 <label htmlFor="startDate">Start Date</label>
