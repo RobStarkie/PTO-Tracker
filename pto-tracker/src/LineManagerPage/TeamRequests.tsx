@@ -1,14 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './TeamRequests.css';
+import axios from 'axios';
 
 type holiday = {id:string,status:string,start:string,end:string};
 type user_details = {user:string, profile_picture:string, holidays:holiday[]};
 
 interface PTORequestsProps {
     teamMembers : user_details[]
+    handleRender: () => void;
 }
 
+
+
 const showElementById = (elementId: string, opacity:string): void => {
+
+    
     const element = document.getElementById(elementId);
     if (element) {
       element.style.opacity = opacity;
@@ -17,7 +23,8 @@ const showElementById = (elementId: string, opacity:string): void => {
     }
   };
 
-const PTORequests: React.FC<PTORequestsProps> = ({ teamMembers }) => {
+const PTORequests: React.FC<PTORequestsProps> = ({ teamMembers , handleRender}) => {
+    const [tempHoliday, setTempHoliday] = useState<{id:string,status:string,start:string,end:string}>()
 
     const startHover = (id:string):void => {
         showElementById(id, '60%');
@@ -27,6 +34,40 @@ const PTORequests: React.FC<PTORequestsProps> = ({ teamMembers }) => {
         showElementById(id, '0%');
     }
 
+    const approveRequest = (request: {id:string,status:string,start:string,end:string}) => {
+        
+        const token = localStorage.getItem('token');
+        const postData = {
+            'id': request.id,
+            'start': request.start,
+            'end': request.end
+        }
+        axios.post('http://localhost:5000/approveRequest', postData, { headers: { Authorization: `Bearer ${token}` }})
+        .then((response) => {
+            console.log(response.data)
+        })
+        .catch(TypeError => {
+            console.error('Error:', TypeError);
+        });
+        handleRender()
+    }
+
+    const denyRequest = (request: {id:string,status:string,start:string,end:string}) => {
+        const token = localStorage.getItem('token');
+        const postData = {
+            'id': request.id,
+            'start': request.start,
+            'end': request.end
+        }
+        axios.post('http://localhost:5000/denyRequest', postData, { headers: { Authorization: `Bearer ${token}` }})
+        .then((response) => {
+            console.log(response.data)
+        })
+        .catch(TypeError => {
+            console.error('Error:', TypeError);
+        });
+        handleRender()
+    }
 
 
     const requestCard = (request : holiday, team_member : user_details) => {
@@ -40,8 +81,12 @@ const PTORequests: React.FC<PTORequestsProps> = ({ teamMembers }) => {
                 <p><b>End: </b> {request.end}</p>
             </div>
             <div style={{display:'flex'}}>            
-                <button style={{backgroundColor:'green'}}><span className="material-symbols-rounded">done</span></button>
-                <button style={{backgroundColor:'red'}}><span className="material-symbols-rounded">close</span></button>
+                <button onClick={e => {
+                    approveRequest(request)
+                }} style={{backgroundColor:'green'}}><span className="material-symbols-rounded">done</span></button>
+                <button onClick={e => {
+                    denyRequest(request)
+                }} style={{backgroundColor:'red'}}><span className="material-symbols-rounded">close</span></button>
             </div>
         </div>
     }
@@ -52,7 +97,7 @@ const PTORequests: React.FC<PTORequestsProps> = ({ teamMembers }) => {
         let requestElements: JSX.Element[] = [];
         for (let i = 0; i < teamMembers.length; i++) {
             teamMembers[i].holidays.forEach(request => {
-                if (request.status === "pending") {
+                if (request.status === "review") {
                     requestElements.push(
                         <li key={request.id}>{requestCard(request, teamMembers[i])}</li>
                     );

@@ -16,7 +16,7 @@
     align-items: center;
 }
 
-.calendar-grid .confirmed {
+.calendar-grid .approved {
     background-color: green;
     transition: 0.3s;
     margin-top: 5px;
@@ -35,11 +35,11 @@
     }
 }
 
-.calendar-grid .confirmed:hover {
+.calendar-grid .approved:hover {
     opacity: 70%;
 }
 
-.calendar-grid .pending {
+.calendar-grid .review {
     background-color: rgb(255, 255, 255);
     transition: 0.3s;
     width: 0%;
@@ -55,7 +55,7 @@
     animation: expandWidth 0.3s forwards;
 }
 
-.calendar-grid .pending:hover {
+.calendar-grid .review:hover {
     opacity: 70%;
 }
 

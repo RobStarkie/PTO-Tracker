@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import './LineManager.css';
 import Tooltip from "@mui/material/Tooltip";
 import { profile } from "console";
@@ -19,6 +19,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     const [currentDate, setCurrentDate] = useState<string>('');
     const [show, setShow] = useState(false);
     const [userListNumber, setUserListNumber] = useState(Number);
+    const [render, setRender] = useState(false);
 
     const [teamMembers, setTeamMembers] = useState<user_details[]>([]);
 
@@ -100,31 +101,38 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         }
     ];
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const token = localStorage.getItem('token');
-    
-        axios.get('http://localhost:5000/api/team-view', {
+        console.log(token)
+        
+        axios.get('http://localhost:5000/api/team-view',  {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         })
         .then(response => {
             const transformedData = transformData(response.data);
-            console.log(transformData);
+            console.log("printing response data")
+            console.log(response.data)
             setTeamMembers(transformedData);
-        })
+            console.log("printing team members")
+            console.log(teamMembers[0])
+            renderCalendar();
+        }) 
         .catch(error => {
             console.error('Error:', error);
         });
+        
+        
         // Depend on currYear and currMonth if the data fetching depends on them
-    }, [currYear, currMonth]);
+    }, [render,currYear, currMonth]);
     
-    useEffect(() => {
+    /*useEffect(() => {
         if (teamMembers.length > 0) {
-            renderCalendar();
+            
         }
         // This hook will run when teamMembers changes
-    }, [teamMembers]);
+    }, [teamMembers]);*/
     
     
     const transformData = (responseData: BackendUser[]) => {
@@ -177,7 +185,9 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     }
     // user_template to be displayed when clicked on
     var user_template = (startDate: number, endDate: number, holiday: holiday) => {
-        console.log('teamMembers:', teamMembers);
+        console.log("holiday")
+        console.log("current holiday" + holiday.start+","+ holiday.end +","+holiday.status);
+
         return <div className='users-row' onClick={handleUserClick} style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status} id={holiday.id.toString()}></div>}></Tooltip></div>
     }
     
@@ -217,10 +227,11 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                 </div>);
             for (let j = 0; j < team_member.holidays.length; j++) {
                 const holiday = team_member.holidays[j];
+                console.log("holiday: "+ holiday.start+","+holiday.end)
                 if (new Date(holiday.start).getFullYear() == currYear) {
-                    console.log("holiday.start == currYear");
+                    console.log(holiday.start +"== currYear");
                     if (new Date(holiday.start).getMonth() == currMonth) {
-                        console.log("holiday.start == currMonth");
+                        console.log(holiday.start+" == currMonth");
                         const startDate = new Date(holiday.start).getDate();
                         if (new Date(holiday.end).getMonth() == currMonth) {
                             console.log("holiday.start == currMonth Again for some reason....");
@@ -243,8 +254,13 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                 }
             }
         }
-        console.log("grid_items: ",grid_items);
+        console.log("grid_items: ",grid_items[0]);
         setDaysTag(<div className="calendar-grid">{grid_items}</div>);
+        setRender(true)
+    }
+
+    const handleRender = async () => {
+        setRender(false)
     }
 
     const userData = () => {
@@ -290,8 +306,8 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                 {daysTag}
             </div>
             <div>
-                {teamMembers.length > 0 ?
-                    (<PTORequests teamMembers={teamMembers} />) : (<div>Loading team members...</div>
+                {render?
+                    (<PTORequests teamMembers={teamMembers} handleRender={handleRender}/>) : (<div>Loading team members...</div>
                 )}
             </div>
         </div>
