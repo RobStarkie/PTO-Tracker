@@ -8,6 +8,7 @@ import 'bootstrap/dist/js/bootstrap.js';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import MapView from "./MapView";
 
 interface LineManagerProps {
 }
@@ -30,7 +31,10 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         id: string,
         status: string,
         start: string,
-        end: string
+        end: string,
+        postcode: string,
+        lat: number,
+        lng: number,
     };
     
     type user_details = {
@@ -47,6 +51,9 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         status: string;
         start: string;
         end: string;
+        postcode: string;
+        lat: number;
+        lng: number;
     };
     
     type BackendUser = {
@@ -58,7 +65,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         holidays: BackendHoliday[];
     };
 
-     const team_members : user_details[] = teamMembers
+     //const team_members : user_details[] = teamMembers
 
     const team_members_test : user_details[] = [
         {
@@ -71,9 +78,12 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             holidays : [
                 {
                     id : '1',
-                    status : "confirmed",
+                    status : "approved",
                     start : "2023-11-15",
-                    end : "2023-11-25"
+                    end: "2023-11-25",
+                    postcode: "QQQ 111",
+                    lat: 0,
+                    lng: 0
                 }
             ]
         },
@@ -87,15 +97,21 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             holidays : [
                 {
                     id : '2',
-                    status : "pending",
+                    status : "review",
                     start : "2023-11-01",
-                    end : "2023-11-03"
+                    end: "2023-11-03",
+                    postcode: "ABC 123",
+                    lat: 0,
+                    lng: 0
                 },
                 {
                     id : '3',
-                    status : "pending",
+                    status : "review",
                     start : "2023-11-19",
-                    end : "2023-12-24"
+                    end: "2023-12-24",
+                    postcode: "DEF 456",
+                    lat: 0,
+                    lng: 0
                 }
             ]
         }
@@ -103,7 +119,6 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
 
     useLayoutEffect(() => {
         const token = localStorage.getItem('token');
-        console.log(token)
         
         axios.get('http://localhost:5000/api/team-view',  {
             headers: {
@@ -112,11 +127,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         })
         .then(response => {
             const transformedData = transformData(response.data);
-            console.log("printing response data")
-            console.log(response.data)
             setTeamMembers(transformedData);
-            console.log("printing team members")
-            console.log(teamMembers[0])
             renderCalendar();
         }) 
         .catch(error => {
@@ -147,7 +158,10 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                 id: holiday.id,
                 status: holiday.status.replace('Status.', '').toLowerCase(),
                 start: holiday.start,
-                end: holiday.end
+                end: holiday.end,
+                postcode: holiday.postcode,
+                lat: holiday.lat,
+                lng: holiday.lng
             }))
         }));
     };
@@ -185,8 +199,6 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     }
     // user_template to be displayed when clicked on
     var user_template = (startDate: number, endDate: number, holiday: holiday) => {
-        console.log("holiday")
-        console.log("current holiday" + holiday.start+","+ holiday.end +","+holiday.status);
 
         return <div className='users-row' onClick={handleUserClick} style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status} id={holiday.id.toString()}></div>}></Tooltip></div>
     }
@@ -213,9 +225,8 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             grid_items.push(<div className='days-row' style={{gridColumnStart:i+2, gridColumnEnd:i+3}}>{dayNames[new Date(currYear,currMonth, i).getDay()]}</div>);
         }
 
-        for (let i = 0; i < teamMembers.length; i++) {
-            const team_member =  teamMembers[i];//team_members_test[i];  data that does work....
-            console.log("Team Member: ", team_member);
+        for (let i = 0; i < team_members_test.length; i++) {
+            const team_member =  team_members_test[i]; // teamMembers[i];  data from flask backend here
             grid_items.push(
                 <div className="team-member" onClick={e => {
                                                         handleShow();
@@ -227,23 +238,22 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                 </div>);
             for (let j = 0; j < team_member.holidays.length; j++) {
                 const holiday = team_member.holidays[j];
-                console.log("holiday: "+ holiday.start+","+holiday.end)
                 if (new Date(holiday.start).getFullYear() == currYear) {
-                    console.log(holiday.start +"== currYear");
                     if (new Date(holiday.start).getMonth() == currMonth) {
-                        console.log(holiday.start+" == currMonth");
                         const startDate = new Date(holiday.start).getDate();
                         if (new Date(holiday.end).getMonth() == currMonth) {
-                            console.log("holiday.start == currMonth Again for some reason....");
                             const endDate = new Date(holiday.end).getDate();
+                            console.log("holiday.postcode 1: "+ holiday.postcode);
                             grid_items.push(user_template(startDate, endDate, holiday));
                         }
                         else {
+                            console.log("holiday.postcode 2: "+ holiday.postcode);
                             const endDate = lastDateofMonth;
                             grid_items.push(user_template(startDate, endDate, holiday));
                         }
                     }
                     else {
+                        console.log("holiday.postcode : "+ holiday.postcode);
                         if (new Date(holiday.end).getMonth() == currMonth) {
                             const endDate = new Date(holiday.end).getDate();
                             const startDate = 1;
@@ -254,7 +264,6 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                 }
             }
         }
-        console.log("grid_items: ",grid_items[0]);
         setDaysTag(<div className="calendar-grid">{grid_items}</div>);
         setRender(true)
     }
@@ -265,11 +274,11 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
 
     const userData = () => {
         // Check if teamMembers is loaded and userListNumber is valid
-        if (!teamMembers || !teamMembers.length || userListNumber >= teamMembers.length) {
-            return <div>Loading...</div>; // Or any other fallback UI
-        }
+        // if (!teamMembers || !teamMembers.length || userListNumber >= teamMembers.length) {
+        //     return <div>Loading...</div>; // Or any other fallback UI
+        // }
 
-        const team_member = teamMembers[userListNumber];
+        const team_member = team_members_test[userListNumber]//teamMembers[userListNumber];
         var data = <div style={{textAlign:'center', marginTop:'20px'}}>
             <img style={{borderRadius:'100%', width:'100px', padding:'10px'}} src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgfQVsavMhO0GRho8eTKGOpUyyDgmQx8mA6B6M6ovOcA&s"></img>
             <p>Username: <b>{team_member.user}</b></p>
@@ -307,8 +316,11 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             </div>
             <div>
                 {render?
-                    (<PTORequests teamMembers={teamMembers} handleRender={handleRender}/>) : (<div>Loading team members...</div>
+                    (<PTORequests teamMembers={team_members_test} handleRender={handleRender}/>) : (<div>Loading team members...</div>
                 )}
+            </div>
+            <div className ="map-display">
+                <MapView />
             </div>
         </div>
     );
