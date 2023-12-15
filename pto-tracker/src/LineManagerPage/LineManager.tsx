@@ -21,11 +21,19 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     const [show, setShow] = useState(false);
     const [userListNumber, setUserListNumber] = useState(Number);
     const [render, setRender] = useState(false);
+    // React state for selected data
+    const [selectedHoliday, setSelectedHoliday] = useState(null);
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
+
+    // Manage the visibility of the modal (map)
+    const [showMapModal, setShowMapModal] = useState(false);
+
 
     const [teamMembers, setTeamMembers] = useState<user_details[]>([]);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const handleMapClose = () => setShowMapModal(false)
 
     type holiday = {
         id: string,
@@ -82,8 +90,8 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                     start : "2023-11-15",
                     end: "2023-11-25",
                     postcode: "QQQ 111",
-                    lat: 0,
-                    lng: 0
+                    lat: 41.383942,
+                    lng: 2.176084
                 }
             ]
         },
@@ -101,8 +109,8 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                     start : "2023-11-01",
                     end: "2023-11-03",
                     postcode: "ABC 123",
-                    lat: 0,
-                    lng: 0
+                    lat: 52.341419,
+                    lng: 4.888043
                 },
                 {
                     id : '3',
@@ -110,8 +118,8 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                     start : "2023-11-19",
                     end: "2023-12-24",
                     postcode: "DEF 456",
-                    lat: 0,
-                    lng: 0
+                    lat: 55.948547,
+                    lng: -3.363355
                 }
             ]
         }
@@ -194,13 +202,18 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         'December',
       ];
 
-    // Handles User clicking on colleagues
-    const handleUserClick = () => {
-    }
-    // user_template to be displayed when clicked on
-    var user_template = (startDate: number, endDate: number, holiday: holiday) => {
 
-        return <div className='users-row' onClick={handleUserClick} style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status} id={holiday.id.toString()}></div>}></Tooltip></div>
+    // When the user is clicked on
+    const handleSelectedHoliday = (data: any, employee: any) => {
+        setSelectedHoliday(data);
+        setSelectedEmployee(employee);
+        setShowMapModal(true);
+        console.log("This is working, holiday data (start date): " + data.lat)
+    };
+    // user_template to be displayed when clicked on
+    var user_template = (employee: user_details, startDate: number, endDate: number, holiday: holiday) => {
+        return <div className='users-row' onClick={() => handleSelectedHoliday(holiday, employee)} style={{ gridColumnStart: startDate + 2, gridColumnEnd: endDate + 3 }}>
+            <Tooltip title={"PTO Status: " + holiday.status} followCursor children={<div className={holiday.status} id={holiday.id.toString()}></div>}></Tooltip></div>
     }
     
 
@@ -244,12 +257,12 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                         if (new Date(holiday.end).getMonth() == currMonth) {
                             const endDate = new Date(holiday.end).getDate();
                             console.log("holiday.postcode 1: "+ holiday.postcode);
-                            grid_items.push(user_template(startDate, endDate, holiday));
+                            grid_items.push(user_template(team_member, startDate, endDate, holiday));
                         }
                         else {
                             console.log("holiday.postcode 2: "+ holiday.postcode);
                             const endDate = lastDateofMonth;
-                            grid_items.push(user_template(startDate, endDate, holiday));
+                            grid_items.push(user_template(team_member,startDate, endDate, holiday));
                         }
                     }
                     else {
@@ -257,7 +270,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                         if (new Date(holiday.end).getMonth() == currMonth) {
                             const endDate = new Date(holiday.end).getDate();
                             const startDate = 1;
-                            grid_items.push(user_template(startDate, endDate, holiday));
+                            grid_items.push(user_template(team_member, startDate, endDate, holiday));
                         }
                     }  
                     
@@ -271,6 +284,24 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     const handleRender = async () => {
         setRender(false)
     }
+    const MapModal = () => (
+        <Modal size="lg" show={showMapModal} onHide={() => setShowMapModal(false)}>
+            <Modal.Header closeButton>
+                <Modal.Title>Map View</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <MapView
+                    data={selectedHoliday}
+                    employee = {selectedEmployee}
+                />
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleMapClose}>
+                    Close
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    );
 
     const userData = () => {
         // Check if teamMembers is loaded and userListNumber is valid
@@ -320,7 +351,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                 )}
             </div>
             <div className ="map-display">
-                <MapView />
+                {showMapModal && <MapModal />}
             </div>
         </div>
     );
