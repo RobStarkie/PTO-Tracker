@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import './TeamRequests.css';
-import axios from 'axios';
+import './MapView.css';
 
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, InfoWindow,useJsApiLoader, Marker } from '@react-google-maps/api';
+import { any } from 'prop-types';
 
   
 type holiday = {
@@ -22,37 +22,34 @@ type user_details = {
 };
 
 interface MapViewProps {
-    teamMembers : user_details[]
-    handleRender: () => void;
+    data: holiday | null
+    employee: user_details | null
+    //teamMembers : user_details[]
+    // handleRender: () => void;
 }
 
-const containerStyle = {
-    width: '1200px',
-    height: '400px',
-    border: '1px solid black',
-};
+interface Coordinates {
+    lat: number;
+    lng: number;
+}
 
 const center = {
     lat: -3.745,
     lng: -38.523
 };
 
-const wrapperStyle = {
-    display: 'flex',
-    justifyContent: 'center', 
-    alignItems: 'center', 
-};
-
-function MapView() {
+function MapView({employee, data }: MapViewProps) {
     const { isLoaded } = useJsApiLoader({
       id: 'google-map-script',
       googleMapsApiKey: "AIzaSyCHbswLdpHD2K_R8ICJngiGeSLHfAa_xO8"
     })
-  
+
+    const defaultCenter = { lat: -34.397, lng: 150.644 }; // Replace with your default center
+    const center = data ? { lat: data.lat, lng: data.lng } : defaultCenter;
+    const [selectedMarker, setSelectedMarker] = useState<Coordinates | null>(null);
     const [map, setMap] = React.useState(null)
-  
+    
     const onLoad = React.useCallback(function callback(map: any) {
-      // This is just an example of getting and using the map instance!!! don't just blindly copy!
       const bounds = new window.google.maps.LatLngBounds(center);
       map.fitBounds(bounds);
   
@@ -62,21 +59,42 @@ function MapView() {
     const onUnmount = React.useCallback(function callback(map: any) {
       setMap(null)
     }, [])
+
   
     return isLoaded ? (
-        <div style={wrapperStyle}>
+        <div className= "wrapperStyle">
             <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
-            zoom={4}
-            onLoad={onLoad}
-            onUnmount={onUnmount}
+                mapContainerClassName="containerStyle"
+                center={center}
+                zoom={4}
+                onLoad={onLoad}
+                onUnmount={onUnmount}
             >
-            { /* Child components, such as markers, info windows, etc. */ }
-            <></>
+                <Marker
+                    position={center}
+                    onClick={() => setSelectedMarker(center)}
+                />
+                {selectedMarker && (
+                    <InfoWindow
+                        position={selectedMarker}
+                        onCloseClick={() => setSelectedMarker(null)}
+                    >
+                        <div>
+                            <h6>Employee Name: {employee?.user}</h6>
+                            <ul>
+                                <li>Location: {selectedMarker.lat}, {selectedMarker.lng}</li>
+                                <li>Start Date: {data?.start}</li>
+                                <li>End Date: {data?.end}</li>
+                                <li>Status: {data?.status}</li>
+                            </ul>
+                            
+                            {/* Add more data as needed */}
+                        </div>
+                    </InfoWindow>
+                )}
             </GoogleMap>
         </div>
-    ) : <></>
-  }
+    ) : <></>;
+}
   
   export default React.memo(MapView)
