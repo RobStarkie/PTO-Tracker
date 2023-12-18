@@ -13,6 +13,7 @@ interface RightAddRequestProps {
 export const RightAddRequest: React.FC<RightAddRequestProps> = ({ content, getToken }) => {
     const [startDate, setStartDate] = useState<string | null>(null);
     const [endDate, setEndDate] = useState<string | null>(null);
+    const [postcode, setPostcode] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const token : string = getToken();
 
@@ -20,7 +21,8 @@ export const RightAddRequest: React.FC<RightAddRequestProps> = ({ content, getTo
         console.log(token)
         const postData = {
             "startDate" : startDate,
-            "endDate" : endDate
+            "endDate": endDate,
+            "postcode": postcode
           }
         axios.post('http://localhost:5000/addNewHolidayRequest',postData,{headers: { Authorization: `Bearer ${token}` }})
         .then(response => {
@@ -47,6 +49,12 @@ export const RightAddRequest: React.FC<RightAddRequestProps> = ({ content, getTo
                 <label htmlFor="endDate">End Date</label>
                 <input type="date" placeholder="dd/mm/yyyy" id="endDate" required onChange={e => {
                     setEndDate(e.target.value);
+                    e.preventDefault();
+                }} />
+
+                <label htmlFor="postcode">Hotel Postcode</label>
+                <input type="string" placeholder="ABC 123" id="postcode" required onChange={e => {
+                    setPostcode(e.target.value);
                     e.preventDefault();
                 }} />
                 <button className="request-button" onClick={handleNewHolidayRequest}>Submit New Request</button>
