@@ -42,7 +42,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
     }
  
 
-    axios.post('http://localhost:5000/token', postData)
+    axios.post('http://localhost:5000/api/token', postData)
     .then(response => {
       localStorage.setItem('token', response.data["access_token"]);
       handleGeneratedToken(response.data["access_token"]);
