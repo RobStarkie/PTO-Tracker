@@ -128,9 +128,9 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     useLayoutEffect(() => {
         const token = localStorage.getItem('token');
         
-        axios.get('http://localhost:5000/api/team-view',  {
+        axios.get('http://localhost:5000/secured/team-view',  {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `${token}`
             }
         })
         .then(response => {
