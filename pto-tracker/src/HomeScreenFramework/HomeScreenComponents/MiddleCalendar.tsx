@@ -45,8 +45,6 @@ const Calendar: React.FC<MiddleCalendarProps> = ({content}) => {
     }
   
     useEffect(() => {
-      console.log("render")
-      console.log(currMonth, currYear)
       renderCalendar(); 
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [content, currYear, currMonth]);
@@ -69,7 +67,6 @@ const Calendar: React.FC<MiddleCalendarProps> = ({content}) => {
       for (let i = 1; i <= lastDateofMonth; i++) {
         const dateToCheck = new Date(currYear, currMonth, i);
         const status:string = isDateInRange(dateToCheck);
-        console.log("status: "+status)
         liTag += `<li class="${status}">${i}</li>`;
       }
   

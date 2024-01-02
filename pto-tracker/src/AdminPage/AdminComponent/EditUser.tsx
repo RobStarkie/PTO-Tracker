@@ -43,7 +43,6 @@ const EditUser: React.FC<AdminProps> = ({user, getToken}) => {
     const [phoneNumber, setPhoneNumber] = useState("");
 
     const submitUser = async () => {
-        console.log("token" + token)
         if (password1==password2) {
             const postData = {
                 'userID' : username,

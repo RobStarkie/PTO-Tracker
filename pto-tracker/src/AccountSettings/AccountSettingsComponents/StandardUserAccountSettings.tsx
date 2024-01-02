@@ -20,10 +20,8 @@ const StandardUserAccountSettings: React.FC<AccountSettingProps> = ({ handleLogo
             const postData = {
                 'password' : password1
             }
-            console.log("new password: " + password1)
             axios.post('http://localhost:5000/editAccount',postData,{ headers: { Authorization: `Bearer ${token}` }})
             .then(response => {
-                console.log("Account has been updated : " + response.data)
             })
             .catch(TypeError => {
                 console.error('Error:', TypeError);
