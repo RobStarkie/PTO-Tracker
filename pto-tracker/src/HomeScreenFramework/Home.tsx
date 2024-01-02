@@ -22,7 +22,6 @@ const Home: React.FC<HomeProps> = ({handleLogout, getToken}) => {
         axios.get('http://localhost:5000/getHolidays', { headers: { Authorization: `Bearer ${token}` }})
         .then(response => {
             let list = response.data;
-            console.log(list.length);
             for (let i = 0; i < list.length; i=i+4) {
                 let j =i
                 const hr = {
@@ -52,7 +51,6 @@ const Home: React.FC<HomeProps> = ({handleLogout, getToken}) => {
     } 
 
     return (
-        console.log("data"+ data),
         <div id = "homePage">
             <ul className="horizontal-list">
                 <li><LeftList content={data}></LeftList></li>
