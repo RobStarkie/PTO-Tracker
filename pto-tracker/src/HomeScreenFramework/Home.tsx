@@ -19,28 +19,46 @@ const Home: React.FC<HomeProps> = ({handleLogout, getToken}) => {
     const [data, setData] = useState([{ id: "", startDate: "", endDate: "", status: "" }])
     
     useLayoutEffect(() => {
-        axios.get('http://localhost:5000/getHolidays', { headers: { Authorization: `Bearer ${token}` }})
+        axios.get('http://localhost:5000/api/secured/getHolidays', { headers: { Authorization: token }})
         .then(response => {
             let list = response.data;
             console.log(list.length);
-            for (let i = 0; i < list.length; i=i+4) {
+            setData(transformData(response.data))  
+            /*for (let i = 0; i < list.length; i=i+4) {
                 let j =i
                 const hr = {
                     id:list[j++],
                     startDate:list[j++],
                     endDate:list[j++],
-                    status:list[j++]
+                    status:list[j++],
+                    
                 };
                 
                 holidayRequests.push(hr);        
-            }
-            setData(holidayRequests);
+            }*/
+            //setData(holidayRequests);
         })
         .catch(TypeError => {
             console.error('Error:', TypeError);
         });
         
     },[]);
+
+    const transformData = (responseData: { JSONHolidays: any; }) => {//: BackendUser[]) => {
+        // Access the team members array within the responsedata object:
+        const ptoRequests = responseData.JSONHolidays;
+
+        if (!Array.isArray(ptoRequests)) {
+            console.error('teamMembers is not an array');
+            return [];
+        }
+        return ptoRequests.map((request) => ({
+            id: request.UserID,
+            startDate: request.Start,
+            endDate: request.End,
+            status: request.Status,
+        }));
+    };
 
     const holidayRequests: { id: string; startDate: string; endDate: string; status: string; }[] = [];
 
@@ -52,7 +70,6 @@ const Home: React.FC<HomeProps> = ({handleLogout, getToken}) => {
     } 
 
     return (
-        console.log("data"+ data),
         <div id = "homePage">
             <ul className="horizontal-list">
                 <li><LeftList content={data}></LeftList></li>

@@ -12,6 +12,7 @@ const LeftList: React.FC<LeftListProps> = ({ content }) => {
     );
 
     const listItems = targetUser.map(request => {
+        console.log("request: "+ request.startDate + ", "+ request.endDate + ", "+ request.status)
         if (request.status == 'APPROVED') {
             return <li><div className="approved">{request.startDate+", "+request.endDate +": "+request.status}</div></li>
         } else if (request.status == 'REVIEW') {
