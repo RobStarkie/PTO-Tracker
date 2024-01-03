@@ -53,7 +53,7 @@ const AdminSelction: React.FC<AdminSelectionProps> = ({ handleCreateAccount, han
         const postData = {
             'userID': username
         }
-        axios.post('http://localhost:5000/getUser',postData,{headers: { Authorization: `Bearer ${token}` }})
+        axios.post('http://localhost:5000/api/secured/getUser',postData,{headers: { Authorization: token }})
         .then(response => {
             const user = {
                 userID: response.data['UserID'], 
