@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Login.css';
 import logo from './logo.png'
 import SmallLoadingSpinner from './Components/SmallLoadingSpinner';
-import axios from 'axios';
+import axios, { AxiosRequestHeaders } from 'axios';
 
 
 
@@ -29,7 +29,18 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
 
   const setEmailSentClick = async () => {
     setEmailSent(false);
-    await new Promise(r => setTimeout(r, 3000));
+    const postData = {
+      "email": username
+    }
+    axios.post('http://localhost:5000/api/forgottenPassword', postData)
+    .then(response => { 
+      console.log(response)
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      setLoginPressed(false);
+    });
+
     setEmailSent(true);
     setShowForgotPassword(true);
   };
@@ -37,17 +48,18 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
   const handleLoginClick = async () => {
     setLoginPressed(true);
     const postData = {
-      "email" : username,
-      "password" : password
+      "email" : (username),
+      "password" : (password)
     }
- 
 
     axios.post('http://localhost:5000/api/token', postData)
-      .then(response => {
+    .then(response => {
       localStorage.setItem('token', response.data["token"]);
+      handleGeneratedToken(response.data["token"]);
       const token = localStorage.getItem('token')
       console.log("Login, print out token after storage: ", token)
       handleGeneratedToken(response.data["token"]);
+
       handleLogin();
       if (response.data["admin"]==true) {
         handleAdmin();

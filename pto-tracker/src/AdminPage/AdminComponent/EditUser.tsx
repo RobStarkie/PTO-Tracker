@@ -58,7 +58,8 @@ const EditUser: React.FC<AdminProps> = ({user, getToken}) => {
                 'TotalHolidays' : holidayNumber,
                 'Admin' : adminBool
             }
-            axios.post('http://localhost:5000/editUser', postData, { headers: { Authorization: `Bearer ${token}` }})
+            console.log("postData: "+teamNumber)
+            axios.post('http://localhost:5000/api/secured/editUser', postData,{headers: { Authorization: token }})
             .then(response => {
                 console.log("has user been added : " + response.data)
                 
