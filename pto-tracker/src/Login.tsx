@@ -47,7 +47,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
       localStorage.setItem('token', response.data["token"]);
       const token = localStorage.getItem('token')
       console.log("Login, print out token after storage: ", token)
-      handleGeneratedToken(response.data["access_token"]);
+      handleGeneratedToken(response.data["token"]);
       handleLogin();
       if (response.data["admin"]==true) {
         handleAdmin();
@@ -58,7 +58,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
     .catch(error => {
       console.error('Error:', error);
       setLoginPressed(false);
-    });    
+    });
   };
 
   const sendPasswordReset = () => {

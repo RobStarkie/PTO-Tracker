@@ -25,7 +25,7 @@ export const RightAddRequest: React.FC<RightAddRequestProps> = ({ content, getTo
             "startDate" : startDate,
             "endDate": endDate,
             "postcode": postcode
-          }
+        }
         axios.post('http://localhost:5000/api/secured/addNewHolidayRequest',postData,{headers: { Authorization: `${token}` }})
         .then(response => {
             console.log(response.data)
@@ -65,7 +65,7 @@ export const RightAddRequest: React.FC<RightAddRequestProps> = ({ content, getTo
                     e.preventDefault();
                 }} />
 
-                <label htmlFor="postcode">Hotel Postcode</label>
+                <label htmlFor="postcode">Hotel Location</label>
                 <input type="string" placeholder="ABC 123" id="postcode" required onChange={e => {
                     setPostcode(e.target.value);
                     e.preventDefault();
