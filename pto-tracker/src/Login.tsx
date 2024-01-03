@@ -58,7 +58,6 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
       handleGeneratedToken(response.data["token"]);
       const token = localStorage.getItem('token')
       console.log("Login, print out token after storage: ", token)
-      handleGeneratedToken(response.data["token"]);
       handleLogin();
       if (response.data["admin"]==true) {
         handleAdmin();
