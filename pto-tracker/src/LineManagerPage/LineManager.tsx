@@ -8,6 +8,7 @@ import 'bootstrap/dist/js/bootstrap.js';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import MapView from "./MapView";
 
 interface LineManagerProps {
 }
@@ -20,17 +21,28 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     const [show, setShow] = useState(false);
     const [userListNumber, setUserListNumber] = useState(Number);
     const [render, setRender] = useState(false);
+    // React state for selected data
+    const [selectedHoliday, setSelectedHoliday] = useState(null);
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
+
+    // Manage the visibility of the modal (map)
+    const [showMapModal, setShowMapModal] = useState(false);
+
 
     const [teamMembers, setTeamMembers] = useState<user_details[]>([]);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const handleMapClose = () => setShowMapModal(false)
 
     type holiday = {
-        id: string,
+        id: any,
         status: string,
         start: string,
-        end: string
+        end: string,
+        postcode: string,
+        lat: number,
+        lng: number,
     };
     
     type user_details = {
@@ -42,23 +54,50 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         profile_picture: string,
         holidays: holiday[]
     };
-    type BackendHoliday = {
-        id: string;
-        status: string;
-        start: string;
-        end: string;
+    type BackendUser = {
+        UserID: number;
+        FirstName: string;
+        SecondName: string;
+        Email: string;
+        PhoneNumber: number;
+        ProfilePicture: string;
+        Holidays: {}; // If this field is not used, consider removing it or defining it properly
+        HolidayJson: BackendHoliday[];
     };
     
-    type BackendUser = {
-        email: string;
-        firstName: string;
-        secondName: string;
-        phoneNumber: string;
-        profile_picture: string;
-        holidays: BackendHoliday[];
+    type BackendHoliday = {
+        id: any;
+        RequestId: number;
+        UserId: number;
+        Start: string;
+        End: string;
+        Status: string;
+        Postcode: string;
+        Lat: number;
+        Lng: number;
     };
 
-     const team_members : user_details[] = teamMembers
+    // type BackendHoliday = {
+    //     id: string;
+    //     status: string;
+    //     start: string;
+    //     end: string;
+    //     postcode: string;
+    //     lat: number;
+    //     lng: number;
+    // };
+    
+    // type BackendUser = {
+    //     email: string;
+    //     firstName: string;
+    //     secondName: string;
+    //     phoneNumber: string;
+    //     profile_picture: string;
+    //     holidays: BackendHoliday[];
+    //     HolidayJson: BackendHoliday[];
+    // };
+
+    const team_members : user_details[] = teamMembers
 
     const team_members_test : user_details[] = [
         {
@@ -71,9 +110,12 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             holidays : [
                 {
                     id : '1',
-                    status : "confirmed",
+                    status : "approved",
                     start : "2023-11-15",
-                    end : "2023-11-25"
+                    end: "2023-11-25",
+                    postcode: "QQQ 111",
+                    lat: 41.383942,
+                    lng: 2.176084
                 }
             ]
         },
@@ -87,15 +129,21 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             holidays : [
                 {
                     id : '2',
-                    status : "pending",
+                    status : "review",
                     start : "2023-11-01",
-                    end : "2023-11-03"
+                    end: "2023-11-03",
+                    postcode: "ABC 123",
+                    lat: 52.341419,
+                    lng: 4.888043
                 },
                 {
                     id : '3',
-                    status : "pending",
+                    status : "review",
                     start : "2023-11-19",
-                    end : "2023-12-24"
+                    end: "2023-12-24",
+                    postcode: "DEF 456",
+                    lat: 55.948547,
+                    lng: -3.363355
                 }
             ]
         }
@@ -103,20 +151,15 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
 
     useLayoutEffect(() => {
         const token = localStorage.getItem('token');
-        console.log(token)
-        
-        axios.get('http://localhost:5000/api/team-view',  {
+        axios.get('http://localhost:5000/api/secured/team-view',  {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `${token}`
             }
         })
-        .then(response => {
+            .then(response => {
+                console.log("raw data: ", response.data)
             const transformedData = transformData(response.data);
-            console.log("printing response data")
-            console.log(response.data)
             setTeamMembers(transformedData);
-            console.log("printing team members")
-            console.log(teamMembers[0])
             renderCalendar();
         }) 
         .catch(error => {
@@ -127,27 +170,37 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         // Depend on currYear and currMonth if the data fetching depends on them
     }, [render,currYear, currMonth]);
     
-    /*useEffect(() => {
+    useEffect(() => {
         if (teamMembers.length > 0) {
             
         }
         // This hook will run when teamMembers changes
-    }, [teamMembers]);*/
+    }, [teamMembers]);
     
     
-    const transformData = (responseData: BackendUser[]) => {
-        return responseData.map(member => ({
-            user: `${member.firstName} ${member.secondName}`,
-            firstName: member.firstName,
-            secondName: member.secondName,
-            email: member.email,
-            phoneNumber: member.phoneNumber,
-            profile_picture: member.profile_picture,
-            holidays: member.holidays.map(holiday => ({
+    const transformData = (responseData: { teamMembers: BackendUser[] }) => {//: BackendUser[]) => {
+        // Access the team members array within the responsedata object:
+        const teamMembers = responseData.teamMembers;
+
+        if (!Array.isArray(teamMembers)) {
+            console.error('teamMembers is not an array');
+            return [];
+        }
+        return teamMembers.map((member) => ({
+            user: `${member.FirstName} ${member.SecondName}`,
+            firstName: member.FirstName,
+            secondName: member.SecondName,
+            email: member.Email,
+            phoneNumber: member.PhoneNumber.toString(),
+            profile_picture: member.ProfilePicture,
+            holidays: member.HolidayJson.map(holiday => ({
                 id: holiday.id,
-                status: holiday.status.replace('Status.', '').toLowerCase(),
-                start: holiday.start,
-                end: holiday.end
+                status: holiday.Status ? holiday.Status.replace('Status.', '').toLowerCase() : 'unknown',
+                start: holiday.Start,
+                end: holiday.End,
+                postcode: holiday.Postcode,
+                lat: holiday.Lat,
+                lng: holiday.Lng
             }))
         }));
     };
@@ -180,15 +233,17 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         'December',
       ];
 
-    // Handles User clicking on colleagues
-    const handleUserClick = () => {
-    }
-    // user_template to be displayed when clicked on
-    var user_template = (startDate: number, endDate: number, holiday: holiday) => {
-        console.log("holiday")
-        console.log("current holiday" + holiday.start+","+ holiday.end +","+holiday.status);
 
-        return <div className='users-row' onClick={handleUserClick} style={{gridColumnStart:startDate+2, gridColumnEnd:endDate+3}}><Tooltip title={"PTO Status: "+holiday.status} followCursor children={<div className={holiday.status} id={holiday.id.toString()}></div>}></Tooltip></div>
+    // When the user is clicked on
+    const handleSelectedHoliday = (data: any, employee: any) => {
+        setSelectedHoliday(data);
+        setSelectedEmployee(employee);
+        setShowMapModal(true);
+    };
+    // user_template to be displayed when clicked on
+    var user_template = (employee: user_details, startDate: number, endDate: number, holiday: holiday) => {
+        return <div className='users-row' onClick={() => handleSelectedHoliday(holiday, employee)} style={{ gridColumnStart: startDate + 2, gridColumnEnd: endDate + 3 }}>
+            <Tooltip title={"PTO Status: " + holiday.status} followCursor children={<div className={holiday.status} id={holiday.id}></div>}></Tooltip></div>
     }
     
 
@@ -201,7 +256,6 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
 
         const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-
         let grid_items = [];
         let first_item = <div style={{gridColumnStart:1,gridColumnEnd:3}}></div>;
         grid_items.push(first_item);
@@ -213,9 +267,9 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             grid_items.push(<div className='days-row' style={{gridColumnStart:i+2, gridColumnEnd:i+3}}>{dayNames[new Date(currYear,currMonth, i).getDay()]}</div>);
         }
 
-        for (let i = 0; i < teamMembers.length; i++) {
-            const team_member =  teamMembers[i];//team_members_test[i];  data that does work....
-            console.log("Team Member: ", team_member);
+        for (let i = 0; i < team_members.length; i++) {
+            const team_member =  team_members[i]; // teamMembers[i];  data from flask backend here
+            //const team_member = team_members[userListNumber]
             grid_items.push(
                 <div className="team-member" onClick={e => {
                                                         handleShow();
@@ -227,34 +281,31 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
                 </div>);
             for (let j = 0; j < team_member.holidays.length; j++) {
                 const holiday = team_member.holidays[j];
-                console.log("holiday: "+ holiday.start+","+holiday.end)
                 if (new Date(holiday.start).getFullYear() == currYear) {
-                    console.log(holiday.start +"== currYear");
                     if (new Date(holiday.start).getMonth() == currMonth) {
-                        console.log(holiday.start+" == currMonth");
                         const startDate = new Date(holiday.start).getDate();
                         if (new Date(holiday.end).getMonth() == currMonth) {
-                            console.log("holiday.start == currMonth Again for some reason....");
                             const endDate = new Date(holiday.end).getDate();
-                            grid_items.push(user_template(startDate, endDate, holiday));
+                            console.log("holiday.start : " + holiday.start + ", j counter = " + j);
+                            console.log(`Holiday ${j}: `, holiday);
+
+                            grid_items.push(user_template(team_member, startDate, endDate, holiday));
                         }
                         else {
                             const endDate = lastDateofMonth;
-                            grid_items.push(user_template(startDate, endDate, holiday));
+                            grid_items.push(user_template(team_member,startDate, endDate, holiday));
                         }
                     }
                     else {
                         if (new Date(holiday.end).getMonth() == currMonth) {
                             const endDate = new Date(holiday.end).getDate();
                             const startDate = 1;
-                            grid_items.push(user_template(startDate, endDate, holiday));
+                            grid_items.push(user_template(team_member, startDate, endDate, holiday));
                         }
-                    }  
-                    
+                    }
                 }
             }
         }
-        console.log("grid_items: ",grid_items[0]);
         setDaysTag(<div className="calendar-grid">{grid_items}</div>);
         setRender(true)
     }
@@ -262,6 +313,24 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
     const handleRender = async () => {
         setRender(false)
     }
+    const MapModal = () => (
+        <Modal size="lg" show={showMapModal} onHide={() => setShowMapModal(false)}>
+            <Modal.Header closeButton>
+                <Modal.Title>Map View</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <MapView
+                    data={selectedHoliday}
+                    employee = {selectedEmployee}
+                />
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleMapClose}>
+                    Close
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    );
 
     const userData = () => {
         // Check if teamMembers is loaded and userListNumber is valid
@@ -269,7 +338,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             return <div>Loading...</div>; // Or any other fallback UI
         }
 
-        const team_member = teamMembers[userListNumber];
+        const team_member = team_members[userListNumber]//teamMembers[userListNumber];
         var data = <div style={{textAlign:'center', marginTop:'20px'}}>
             <img style={{borderRadius:'100%', width:'100px', padding:'10px'}} src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgfQVsavMhO0GRho8eTKGOpUyyDgmQx8mA6B6M6ovOcA&s"></img>
             <p>Username: <b>{team_member.user}</b></p>
@@ -307,8 +376,11 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
             </div>
             <div>
                 {render?
-                    (<PTORequests teamMembers={teamMembers} handleRender={handleRender}/>) : (<div>Loading team members...</div>
+                    (<PTORequests teamMembers={team_members} handleRender={handleRender}/>) : (<div>Loading team members...</div>
                 )}
+            </div>
+            <div className ="map-display">
+                {showMapModal && <MapModal />}
             </div>
         </div>
     );

@@ -1,0 +1,11 @@
+.containerStyle {
+    width: 800px;
+    height: 400px;
+    border: 1px solid black;
+}
+
+.wrapperStyle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
