@@ -15,25 +15,38 @@ export const RightAddRequest: React.FC<RightAddRequestProps> = ({ content, getTo
     const [endDate, setEndDate] = useState<string | null>(null);
     const [postcode, setPostcode] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
     const token : string = getToken();
 
     const handleNewHolidayRequest = () => {
-        console.log(token)
+        setIsLoading(true); // start loading
+        const token = localStorage.getItem('token');
         const postData = {
             "startDate" : startDate,
             "endDate": endDate,
             "postcode": postcode
           }
-        axios.post('http://localhost:5000/addNewHolidayRequest',postData,{headers: { Authorization: `Bearer ${token}` }})
+        axios.post('http://localhost:5000/api/secured/addNewHolidayRequest',postData,{headers: { Authorization: `${token}` }})
         .then(response => {
             console.log(response.data)
+            setIsLoading(false);
+            setSubmitted(true);
+            // Clear input fields
+            setStartDate(null);
+            setEndDate(null);
+            setPostcode(null);
+            
         })
         .catch(error => {
             console.error('Error:', error);
+            setIsLoading(false);
         });
         //submit new holiday request
         //submitNewRequest(startDate, endDate);
     };
+    if (isLoading) {
+        return <LoadingSpinner isLoading={false} />;
+    }
 
     return (
         <div className="rightComponentContainer">
@@ -57,7 +70,9 @@ export const RightAddRequest: React.FC<RightAddRequestProps> = ({ content, getTo
                     setPostcode(e.target.value);
                     e.preventDefault();
                 }} />
-                <button className="request-button" onClick={handleNewHolidayRequest}>Submit New Request</button>
+                <button className="request-button" onClick={handleNewHolidayRequest}>
+                    {submitted ? "Submit Another Request" : "Submit New Request"}
+                </button>
             </div>
         </div>
     );
