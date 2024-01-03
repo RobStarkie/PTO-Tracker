@@ -10,6 +10,7 @@ interface PTORequestsProps {
     handleRender: () => void;
 }
 
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 
 const showElementById = (elementId: string, opacity:string): void => {
@@ -34,38 +35,45 @@ const PTORequests: React.FC<PTORequestsProps> = ({ teamMembers , handleRender}) 
         showElementById(id, '0%');
     }
 
-    const approveRequest = (request: {id:string,status:string,start:string,end:string}) => {
+    const approveRequest = async (request: {id:string,status:string,start:string,end:string}) => {
         
         const token = localStorage.getItem('token');
         const postData = {
-            'id': request.id,
+            'status': 'APPROVED',
             'start': request.start,
             'end': request.end
         }
-        axios.post('http://localhost:5000/approveRequest', postData, { headers: { Authorization: `Bearer ${token}` }})
+        console.log("Sending data to backend:", postData);
+
+        axios.post('http://localhost:5000/api/secured/approveRequest', postData, { headers: { Authorization: `${token}` }})
         .then((response) => {
             console.log(response.data)
         })
         .catch(TypeError => {
             console.error('Error:', TypeError);
         });
+        await delay(1000);
         handleRender()
     }
 
-    const denyRequest = (request: {id:string,status:string,start:string,end:string}) => {
+    const denyRequest = async (request: {id:string,status:string,start:string,end:string}) => {
         const token = localStorage.getItem('token');
         const postData = {
-            'id': request.id,
+            'status': 'DENIED',
             'start': request.start,
             'end': request.end
         }
-        axios.post('http://localhost:5000/denyRequest', postData, { headers: { Authorization: `Bearer ${token}` }})
+        console.log("Sending data to backend:", postData);
+
+        axios.post('http://localhost:5000/api/secured/denyRequest', postData, { headers: { Authorization: `${token}` }})
         .then((response) => {
             console.log(response.data)
         })
-        .catch(TypeError => {
+            .catch(TypeError => {
+            console.log("request.start: "+request.start)
             console.error('Error:', TypeError);
         });
+        await delay(1000);
         handleRender()
     }
 

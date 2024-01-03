@@ -77,25 +77,7 @@ const LineManagerPage: React.FC<LineManagerProps> = () => {
         Lng: number;
     };
 
-    // type BackendHoliday = {
-    //     id: string;
-    //     status: string;
-    //     start: string;
-    //     end: string;
-    //     postcode: string;
-    //     lat: number;
-    //     lng: number;
-    // };
-    
-    // type BackendUser = {
-    //     email: string;
-    //     firstName: string;
-    //     secondName: string;
-    //     phoneNumber: string;
-    //     profile_picture: string;
-    //     holidays: BackendHoliday[];
-    //     HolidayJson: BackendHoliday[];
-    // };
+
 
     const team_members : user_details[] = teamMembers
 
