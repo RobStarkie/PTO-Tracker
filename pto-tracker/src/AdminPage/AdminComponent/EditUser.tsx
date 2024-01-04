@@ -45,7 +45,7 @@ const EditUser: React.FC<AdminProps> = ({user, getToken}) => {
     const submitUser = async () => {
         if (password1==password2) {
             const postData = {
-                'userID' : username,
+                'UserID' : username,
                 'TeamID' : teamNumber,
                 'Email' : email,
                 'FirstName' : firstName,
@@ -90,7 +90,6 @@ const EditUser: React.FC<AdminProps> = ({user, getToken}) => {
                 <input type="text" value ={phoneNumber} placeholder="PhoneNumber" name="PhoneNumber" id="PhoneNumber" required onChange={e =>{setPhoneNumber(e.target.value);}}></input>
             </div>
             <div className="userInputs2">
-           
                 <label htmlFor="password">Password</label>
                 <input type="password" value={password1} placeholder="Enter Password" name="password" id="password" required onChange={e =>{setPassword1(e.target.value);}}></input>
 
