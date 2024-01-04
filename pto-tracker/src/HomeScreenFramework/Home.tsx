@@ -8,41 +8,42 @@ import axios, { AxiosResponse } from 'axios';
 import { request } from "http";
 import { data } from "jquery";
 import { Construction } from "@mui/icons-material";
+import { string } from "yargs";
 
 interface HomeProps {
     handleLogout: () => void;
     getToken: () => string;
 }
 
-const Home: React.FC<HomeProps> = ({handleLogout, getToken}) => {
-    const token : string = getToken();
+const Home: React.FC<HomeProps> = ({ handleLogout, getToken }) => {
+    const token: string = getToken();
     const [data, setData] = useState([{ id: "", startDate: "", endDate: "", status: "" }])
     
     useLayoutEffect(() => {
-        axios.get('http://localhost:5000/api/secured/getHolidays', { headers: { Authorization: token }})
-        .then(response => {
-            let list = response.data;
-            console.log(list.length);
-            setData(transformData(response.data))  
-            /*for (let i = 0; i < list.length; i=i+4) {
-                let j =i
-                const hr = {
-                    id:list[j++],
-                    startDate:list[j++],
-                    endDate:list[j++],
-                    status:list[j++],
+        axios.get('http://localhost:5000/api/secured/getHolidays', { headers: { Authorization: token } })
+            .then(response => {
+                let list = response.data;
+                console.log(list.length);
+                setData(transformData(response.data))
+                /*for (let i = 0; i < list.length; i=i+4) {
+                    let j =i
+                    const hr = {
+                        id:list[j++],
+                        startDate:list[j++],
+                        endDate:list[j++],
+                        status:list[j++],
+                        
+                    };
                     
-                };
-                
-                holidayRequests.push(hr);        
-            }*/
-            //setData(holidayRequests);
-        })
-        .catch(TypeError => {
-            console.error('Error:', TypeError);
-        });
+                    holidayRequests.push(hr);        
+                }*/
+                //setData(holidayRequests);
+            })
+            .catch(TypeError => {
+                console.error('Error:', TypeError);
+            });
         
-    },[]);
+    }, []);
 
     const transformData = (responseData: { JSONHolidays: any; }) => {//: BackendUser[]) => {
         // Access the team members array within the responsedata object:
@@ -60,6 +61,28 @@ const Home: React.FC<HomeProps> = ({handleLogout, getToken}) => {
         }));
     };
 
+    type HolidayRequest = {
+        id: string;
+        startDate: string;
+        endDate: string;
+        status: string;
+    }
+
+    const handleAddNewHolidayRequest = (id: string, startDate: string, endDate: string) => {
+        const newData: HolidayRequest = {
+            id: id,
+            startDate: startDate,
+            endDate: endDate,
+            status: "REVIEW"
+        };
+ 
+        // Appends newData to currrent data
+        setData((data) => ([...data, newData]))
+        //setFilteredProducts((currentFilteredProducts) => ([...currentFilteredProducts, ...productsToAdd]));
+    }
+
+
+
     const holidayRequests: { id: string; startDate: string; endDate: string; status: string; }[] = [];
 
     const holidayRemaining = {
@@ -74,7 +97,7 @@ const Home: React.FC<HomeProps> = ({handleLogout, getToken}) => {
             <ul className="horizontal-list">
                 <li><LeftList content={data}></LeftList></li>
                 <li><Calendar content={data}></Calendar></li>
-                <li><RightAddRequest content='' getToken={getToken}></RightAddRequest></li>
+                <li><RightAddRequest content='' getToken={getToken} handleAddNewHolidayRequest={handleAddNewHolidayRequest}></RightAddRequest></li>
                 <li><HolidayRemaining content={data}></HolidayRemaining></li>
             </ul> 
         </div>

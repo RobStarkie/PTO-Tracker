@@ -3,14 +3,20 @@ import "./RightAddRequest.css"
 import LoadingSpinner from "../../Components/LoadingSpinner";
 import axios from "axios";
 import Home from "../Home";
+import { data } from "jquery";
+import { object } from "prop-types";
+import { string } from "yargs";
 
 
 interface RightAddRequestProps {
+
     content : string
     getToken: () => string;
+    handleAddNewHolidayRequest: (id: string, startDate: string, endDate: string) => void;
 }
 
-export const RightAddRequest: React.FC<RightAddRequestProps> = ({ content, getToken }) => {
+export const RightAddRequest: React.FC<RightAddRequestProps> = ({ content, getToken, handleAddNewHolidayRequest  }) => {
+    
     const [startDate, setStartDate] = useState<string | null>(null);
     const [endDate, setEndDate] = useState<string | null>(null);
     const [postcode, setPostcode] = useState<string | null>(null);
@@ -22,10 +28,18 @@ export const RightAddRequest: React.FC<RightAddRequestProps> = ({ content, getTo
         setIsLoading(true); // start loading
         const token = localStorage.getItem('token');
         const postData = {
-            "startDate" : startDate,
+            "startDate": startDate,
             "endDate": endDate,
             "postcode": postcode
         }
+        const newData: object = {
+            id: '0',
+            startDate: postData.startDate,
+            endDate: postData.endDate,
+            status: "REVIEW"
+        }
+       
+        handleAddNewHolidayRequest("0", startDate + '', endDate + '')
         axios.post('http://localhost:5000/api/secured/addNewHolidayRequest',postData,{headers: { Authorization: `${token}` }})
         .then(response => {
             console.log(response.data)
