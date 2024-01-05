@@ -78,7 +78,6 @@ const Home: React.FC<HomeProps> = ({ handleLogout, getToken }) => {
  
         // Appends newData to currrent data
         setData((data) => ([...data, newData]))
-        //setFilteredProducts((currentFilteredProducts) => ([...currentFilteredProducts, ...productsToAdd]));
     }
 
 

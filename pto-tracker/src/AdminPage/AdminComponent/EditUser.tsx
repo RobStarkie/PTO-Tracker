@@ -16,13 +16,13 @@ const EditUser: React.FC<AdminProps> = ({user, getToken}) => {
         setEmail(user.Email)
         setPassword1(user.password)
         setPassword2(user.password)
-        setLineManagerID(user.LineManagerID)
-        setHolidayNumber(user.TotalHolidays)
+        setLineManagerID(+user.LineManagerID)
+        setHolidayNumber(+user.TotalHolidays)
         setLineManagerBool(user.LineManager)
         setAdminBool(user.Admin)
         setTeamNumber(user.TeamID)
         setProfilePicture(user.ProfilePicture)
-        setPhoneNumber(user.phoneNumber)
+        setPhoneNumber(+user.phoneNumber)
 
     }, [user])
 
@@ -34,13 +34,13 @@ const EditUser: React.FC<AdminProps> = ({user, getToken}) => {
     const [email, setEmail] = useState("");
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
-    const [lineManagerID, setLineManagerID] = useState("");
-    const [holidayNumber, setHolidayNumber] = useState("");
+    const [lineManagerID, setLineManagerID] = useState(0);
+    const [holidayNumber, setHolidayNumber] = useState(0);
     const [lineManagerBool, setLineManagerBool] = useState(false);
     const [adminBool, setAdminBool] = useState(false);
     const [teamNumber, setTeamNumber] = useState("");
     const [ProfilePicture, setProfilePicture] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState(0);
 
     const submitUser = async () => {
         if (password1==password2) {
@@ -87,7 +87,7 @@ const EditUser: React.FC<AdminProps> = ({user, getToken}) => {
                 <input type="text" value={email} placeholder="Enter Email" name="email" id="email" required onChange={e =>{setEmail(e.target.value);}}></input>
 
                 <label htmlFor="email">Phone Number</label>
-                <input type="text" value ={phoneNumber} placeholder="PhoneNumber" name="PhoneNumber" id="PhoneNumber" required onChange={e =>{setPhoneNumber(e.target.value);}}></input>
+                <input type="text" value ={phoneNumber} placeholder="PhoneNumber" name="PhoneNumber" id="PhoneNumber" required onChange={e =>{setPhoneNumber(Number(e.target.value));}}></input>
             </div>
             <div className="userInputs2">
                 <label htmlFor="password">Password</label>
@@ -97,10 +97,10 @@ const EditUser: React.FC<AdminProps> = ({user, getToken}) => {
                 <input type="password" value={password2} placeholder="Enter Password" name="repeatPassword" id="repeatPassword" required onChange={e =>{setPassword2(e.target.value);}}></input>
 
                 <label htmlFor="LineManagerLabel" >Line Manager</label>
-                <input type="text" value={lineManagerID} placeholder="Line Manager" name="LineManagerInput" id="LineManagerInput" required onChange={e =>{setLineManagerID(e.target.value);}}></input>
+                <input type="text" value={lineManagerID} placeholder="Line Manager" name="LineManagerInput" id="LineManagerInput" required onChange={e =>{setLineManagerID(Number(e.target.value));}}></input>
 
                 <label htmlFor="HolidayNumber" > Number of Holidays</label>
-                <input type="text" value={holidayNumber} placeholder="Number of Holidays" name="numberOfHolidays" id="numberOfHolidays" required onChange={e =>{setHolidayNumber(e.target.value);}}></input>
+                <input type="text" value={holidayNumber} placeholder="Number of Holidays" name="numberOfHolidays" id="numberOfHolidays" required onChange={e =>{setHolidayNumber(Number(e.target.value));}}></input>
                 
             </div>
             <div className="userInputs3">
