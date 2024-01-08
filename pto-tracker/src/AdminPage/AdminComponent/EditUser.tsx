@@ -10,7 +10,7 @@ interface AdminProps {
 const EditUser: React.FC<AdminProps> = ({user, getToken}) => {
 
     useEffect (() => {
-        setUsername(user.userID)
+        setUsername(+user.userID)
         setFirstName(user.FirstName)
         setSecondName(user.SecondName)
         setEmail(user.Email)
@@ -20,7 +20,7 @@ const EditUser: React.FC<AdminProps> = ({user, getToken}) => {
         setHolidayNumber(+user.TotalHolidays)
         setLineManagerBool(user.LineManager)
         setAdminBool(user.Admin)
-        setTeamNumber(user.TeamID)
+        setTeamNumber(+user.TeamID)
         setProfilePicture(user.ProfilePicture)
         setPhoneNumber(+user.phoneNumber)
 
@@ -28,7 +28,7 @@ const EditUser: React.FC<AdminProps> = ({user, getToken}) => {
 
     const token : string = getToken();
     
-    const [username, setUsername] = useState("");
+    const [username, setUsername] = useState(0);
     const [firstName, setFirstName] = useState("");
     const [secondName, setSecondName] = useState("");
     const [email, setEmail] = useState("");
@@ -38,47 +38,52 @@ const EditUser: React.FC<AdminProps> = ({user, getToken}) => {
     const [holidayNumber, setHolidayNumber] = useState(0);
     const [lineManagerBool, setLineManagerBool] = useState(false);
     const [adminBool, setAdminBool] = useState(false);
-    const [teamNumber, setTeamNumber] = useState("");
+    const [teamNumber, setTeamNumber] = useState(0);
     const [ProfilePicture, setProfilePicture] = useState("");
     const [phoneNumber, setPhoneNumber] = useState(0);
 
     const submitUser = async () => {
-        if (password1==password2) {
+        if (password1 === password2) {
             const postData = {
-                'UserID' : username,
-                'TeamID' : teamNumber,
-                'Email' : email,
-                'FirstName' : firstName,
-                'SecondName' : secondName,
-                'Password' : password1,
-                'ProfilePicture' : ProfilePicture,
-                'PhoneNumber' : phoneNumber,
-                'LineManager' : lineManagerBool,
-                'LineManagerID' : lineManagerID,
-                'TotalHolidays' : holidayNumber,
-                'Admin' : adminBool
-            }
-            console.log("postData: "+teamNumber)
-            axios.post('http://localhost:5000/api/secured/editUser', postData,{headers: { Authorization: token }})
-            .then(response => {
-                console.log("has user been added : " + response.data)
-                
-              })
-            .catch(error => {
+                'UserID': username,
+                'TeamID': teamNumber,
+                'Email': email,
+                'FirstName': firstName,
+                'SecondName': secondName,
+                'Password': password1,
+                'ProfilePicture': ProfilePicture,
+                'PhoneNumber': phoneNumber,
+                'LineManager': lineManagerBool,
+                'LineManagerID': lineManagerID,
+                'TotalHolidays': holidayNumber,
+                'Admin': adminBool
+            };
+            console.log("postData: ", postData);
+            console.log("TeamID type: ", typeof postData.TeamID);
+    
+            try {
+                const response = await axios.post('http://localhost:5000/api/secured/editUser', postData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token
+                    }
+                });
+                console.log("Response: ", response.data);
+            } catch (error) {
                 console.error('Error:', error);
-            }); 
+            }
         }
-    }
+    };
     
     return (
         <div className="EditAccount">
             <h1 className="RegisterNewUserFormHeader">Edit Account</h1>
             <div className="userInputs1">
                 <label htmlFor="username">UserID</label>
-                <input type="text" value = {username} placeholder="username" name="username" id="username" required onChange={e =>{setUsername(e.target.value);}} ></input>
+                <input type="text" value = {username} placeholder="username" name="username" id="username" required onChange={e =>{setUsername(Number(e.target.value));}} ></input>
 
                 <label htmlFor="firstName">First Name</label>
-                <input type="text" value = {firstName}placeholder="firstName" name="firstName" id="username" required onChange={e =>{setFirstName(e.target.value);}}></input>
+                <input type="text" value = {firstName}placeholder="firstName" name="firstName" id="firstName" required onChange={e =>{setFirstName(e.target.value);}}></input>
 
                 <label htmlFor="lastName">Last Name</label>
                 <input type="text" value = {secondName} placeholder="lastName" name="lastName" id="lastName" required onChange={e =>{setSecondName(e.target.value);}}></input> 
@@ -111,7 +116,7 @@ const EditUser: React.FC<AdminProps> = ({user, getToken}) => {
                 <input type="radio" checked={lineManagerBool==true} id="createAdmin" name="typeOfAccount" value="createAdmin" onClick={ e => {setAdminBool(true)}}></input>
 
                 <label htmlFor="numberOfHoliday" >Team Number</label>
-                <input type="text" value={teamNumber} placeholder="Number of Holidays" name="teamNumber" id="teamNumber" required onChange={e =>{setTeamNumber(e.target.value);}}></input>
+                <input type="text" value={teamNumber} placeholder="Number of Holidays" name="teamNumber" id="teamNumber" required onChange={e =>{setTeamNumber(Number(e.target.value));}}></input>
 
                 <label htmlFor="numberOfHoliday" >Profile Picture</label>
                 <input type="text" value={ProfilePicture} placeholder="Profile Picture URL" name="profilePicture" id="profilePicture" required onChange={e =>{setProfilePicture(e.target.value);}}></input>
