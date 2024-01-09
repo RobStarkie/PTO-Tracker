@@ -119,7 +119,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ handleLogin, handleUsername, 
                       e.preventDefault();
                     }}/>
 
-                  <button type="button" onClick={handleLoginClick}><div style={{display: `${!loginPressed?'none' : ''}`}}><SmallLoadingSpinner></SmallLoadingSpinner></div><div style={{display: `${loginPressed?'none' : ''}` }}>Log In</div></button>
+                  <button type="button" id = "loginButton" onClick={handleLoginClick}><div style={{display: `${!loginPressed?'none' : ''}`}}><SmallLoadingSpinner></SmallLoadingSpinner></div><div style={{display: `${loginPressed?'none' : ''}` }}>Log In</div></button>
 
                   <a href="#" onClick={handleForgotPasswordClick}><h2 style={{textAlign:'center'}}>Forgot Password</h2></a>
                 </div>
