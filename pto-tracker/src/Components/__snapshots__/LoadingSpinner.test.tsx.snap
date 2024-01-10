@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadingSpinner renders correctly when loading 1`] = `
+<DocumentFragment>
+  <div
+    class="loading-spinner show"
+  >
+    <div
+      class="lds-ring"
+    >
+      <div />
+      <div />
+      <div />
+      <div />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`LoadingSpinner renders correctly when not loading 1`] = `
+<DocumentFragment>
+  <div
+    class="loading-spinner "
+  >
+    <div
+      class="lds-ring"
+    >
+      <div />
+      <div />
+      <div />
+      <div />
+    </div>
+  </div>
+</DocumentFragment>
+`;
