@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./RightAddRequest.css"
 import LoadingSpinner from "../../Components/LoadingSpinner";
-import axios from "axios";
+import axios from 'axios';
 import Home from "../Home";
 import { data } from "jquery";
 import { object } from "prop-types";

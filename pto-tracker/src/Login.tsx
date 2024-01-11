@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Login.css';
 import logo from './logo.png'
 import SmallLoadingSpinner from './Components/SmallLoadingSpinner';
-import axios, { AxiosRequestHeaders } from 'axios';
+import axios from 'axios';
 
 
 
