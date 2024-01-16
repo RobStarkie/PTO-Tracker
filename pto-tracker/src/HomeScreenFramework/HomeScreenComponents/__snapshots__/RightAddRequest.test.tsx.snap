@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RightAddRequest (Holiday Request Adder UI) renders correctly when loading 1`] = `
+<div
+  className="rightComponentContainer"
+>
+  <div
+    className="rightComponentForm"
+  >
+    <h1
+      className="rightComponentHeader"
+    >
+      Enter a New Request
+    </h1>
+    <label
+      htmlFor="startDate"
+    >
+      Start Date
+    </label>
+    <input
+      id="startDate"
+      onChange={[Function]}
+      placeholder="dd/mm/yyyy"
+      required={true}
+      type="date"
+    />
+    <label
+      htmlFor="endDate"
+    >
+      End Date
+    </label>
+    <input
+      id="endDate"
+      onChange={[Function]}
+      placeholder="dd/mm/yyyy"
+      required={true}
+      type="date"
+    />
+    <label
+      htmlFor="postcode"
+    >
+      Hotel Location
+    </label>
+    <input
+      id="postcode"
+      onChange={[Function]}
+      placeholder="ABC 123"
+      required={true}
+      type="string"
+    />
+    <button
+      className="request-button"
+      onClick={[Function]}
+    >
+      Submit New Request
+    </button>
+  </div>
+</div>
+`;
